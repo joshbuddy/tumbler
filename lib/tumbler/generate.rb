@@ -37,7 +37,9 @@ module Tumbler
     end
 
     def constant_name
-      @name.split('_').map{|p| p.capitalize}.join
+      result = @name.split('_').map{|p| p.capitalize}.join
+      result = result.split('-').map{|q| q.capitalize}.join('::') if result =~ /-/
+      result
     end
 
     def write
