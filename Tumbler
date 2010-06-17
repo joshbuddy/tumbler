@@ -1,0 +1,9 @@
+gem_name 'tumbler'
+
+use_version do
+  filename 'VERSION'
+end
+
+use_changelog do
+  filename 'CHANGELOG'
+end

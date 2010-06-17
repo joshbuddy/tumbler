@@ -1,0 +1,10 @@
+source :rubygems
+
+# your dependencies go here
+# gem 'nokogiri'
+
+group :development do
+  # your development dependencies go here
+  # gem 'rake'
+  # gem 'rspect'
+end

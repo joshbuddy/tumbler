@@ -1,0 +1,54 @@
+I want ... 
+
+* version management
+* changelog generation
+* dependancy management from bundler to gemspec
+
+Tumbler
+for_version do
+  format "#.#.#"
+  filename "VERSION"
+end
+
+for_changelog do
+  filename "CHANGELOG.txt"
+  format "#{line} (#{author})"
+end
+
+rake version:bump:patch
+rake version:bump:minor
+rake version:bump:major
+rake version:tag
+rake changelog:regenerate
+rake changelog:update
+rake gem:push
+rake gem:register
+rake gem:build
+rake gem:install
+rake gemspec:skeleton
+
+rake patch:release -> version:bump:patch changelog:update version:tag rake gem:push
+rake minor:release -> version:bump:patch changelog:update version:tag rake gem:push
+rake major:release -> version:bump:patch changelog:update version:tag rake gem:push
+
+gemspec ...
+  files from git
+  version from file
+  deps from bundler
+
+version bump
+  update version file
+  commit result
+  
+version tag
+  create git tag
+  commit result (?)
+
+changelog update
+  since last release ... get all tags, get all change lines, build file
+
+gem push
+gem register
+
+gemspec skel
+  .gemspec
