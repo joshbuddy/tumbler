@@ -11,7 +11,7 @@ module Tumbler
       def initialize(manager, &block)
         @manager = manager
         filename(manager.default_version_file)
-        fields(manager.default_version_file)
+        fields(DEFAULT_FIELD)
         instance_eval(&block) if block
       end
 
@@ -20,16 +20,15 @@ module Tumbler
       end
 
       def reload
-        p extract
         @version = Versionomy.parse(File.exist?(file) ? extract : '0.0.0')
       end  
 
       def extract
-        File.read(file)[/Version\s*=\s*['"](.*?)['"]/i, 1]
+        File.read(@file)[/Version\s*=\s*['"](.*?)['"]/i, 1]
       end
 
       def generate_with_new(version)
-        File.read(file).gsub(/(Version\s*=\s*['"])(.*?)(['"])/i, "$1#{version}$3")
+        File.read(@file).gsub(/(Version\s*=\s*['"])(.*?)(['"])/i, "\\1#{version.to_s}\\3")
       end
 
       def filename(file)
@@ -49,7 +48,8 @@ module Tumbler
         if @manager.noop
           @manager.dry "Bumping version to #{bump(level).to_s}"
         else
-          File.open(file, 'w') {|f| f << generate_with_new(@version.bump(level).to_s)}
+          new_file = generate_with_new(@version.bump(level).to_s)
+          File.open(file, 'w') {|f| f << new_file }
           reload
         end
       end

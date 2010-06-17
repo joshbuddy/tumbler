@@ -9,6 +9,7 @@ describe 'Tumbler#version' do
 
   it "should bump the current version by minor" do
     create_app('test', :version => '0.1.2') { |tumbler|
+      puts "File.read(tumbler.version.file) #{File.read(tumbler.version.file)}"
       tumbler.bump_and_push(:minor)
       tumbler.version.to_s.should == '0.2.0'
       tumbler.tags.should include('0.2.0')

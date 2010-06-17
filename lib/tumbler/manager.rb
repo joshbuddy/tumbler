@@ -14,6 +14,10 @@ module Tumbler
       File.join('lib', name, 'version.rb')
     end
 
+    def default_changelog_file
+      Changelog::DEFAULT_FILE
+    end
+
     def gem_name(name)
       @name = name
     end

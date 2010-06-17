@@ -16,9 +16,9 @@ describe Tumbler::Updater do
   it "should fetch the version number" do
     FakeWeb.allow_net_connect = false
     FakeWeb.register_uri(:get, "http://rubygems.org/api/v1/gems/rails.json", :body => '{ "name": "rails", "info": "Rails is a framework for building web-application using CGI, FCGI, mod_ruby, or WEBrick on top of either MySQL, PostgreSQL, SQLite, DB2, SQL Server, or Oracle with eRuby- or Builder-based templates.", "version": "2.3.5", "version_downloads": 2451, "authors": "David Heinemeier Hansson", "downloads": 134451, "project_uri": "http://rubygems.org/gems/rails", "gem_uri": "http://rubygems.org/gems/rails-2.3.5.gem", "dependencies": { "runtime": [ { "name": "activesupport", "requirements": ">= 2.3.5" } ], "development": [ ] }}')
-    File.unlink("#{@target}/rails/lib/VERSION")
+    File.unlink("#{@target}/rails/lib/rails/version.rb")
     Tumbler::Updater.new("#{@target}/rails", :name => 'rails').update
-    File.read("#{@target}/rails/lib/VERSION").should == '2.3.5'
+    File.read("#{@target}/rails/lib/rails/version.rb").should match(/2\.3\.5/)
   end
 
   it "should generate a CHANGELOG" do

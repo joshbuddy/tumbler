@@ -46,7 +46,7 @@ raise # (see below)
         # go to rubygems and get it
         gem_data = JSON.parse(Net::HTTP.get(URI.parse("http://rubygems.org/api/v1/gems/#{URI.escape(@name)}.json")))
         version = gem_data['version']
-        File.open(version_path, 'w') {|f| f << version}
+        Tumbler::Generate.app(@dir, @name).write_version(version)
       end
     end
 

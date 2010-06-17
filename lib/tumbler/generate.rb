@@ -43,7 +43,7 @@ module Tumbler
     def write
       write_gemspec
       write_gemfile
-      write_version
+      write_version(@version)
       write_changelog
       write_rakefile
       write_tumbler_config
@@ -66,17 +66,7 @@ module Tumbler
       File.join(@base, 'Tumbler')
     end
 
-    def init_version
-      return unless @version
-      File.open(@version.file, "w") {|f| f.puts @version.value.to_s} unless File.exist?(@version.file)
-    end
-
-    def init_changelog
-      return unless @changelog
-      File.open(@changelog.file, "w") {|f| f << ''} unless File.exist?(@changelog.file)
-    end
-
-    def write_version(version = Manager::Version::INITIAL_VERSION)
+    def write_version(version)
       FileUtils.mkdir_p(File.dirname(version_path))
       File.open(version_path, 'w') {|f| f << generate_version(version) }
     end
