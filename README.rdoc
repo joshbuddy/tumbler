@@ -7,8 +7,7 @@ Let's make gem development fun and remove all the repetition! Tumbler provides s
 Tumbler was built to help developers create and manage gems using a common set of 'best practices' out of the box. Tumbler also makes a number of assumptions about your workflow:
 
 * Gem uses directly edited dynamic gemspecs
-* Gem uses Git to manage the source
-* Gem source will be hosted on Github
+* Gem uses Git to manage code source (perhaps on Github)
 * Git tags are created for each new version
 * Gem dependencies are defined using a Gemfile through Bundler
 
