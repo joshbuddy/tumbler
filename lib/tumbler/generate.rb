@@ -120,16 +120,18 @@ module Tumbler
     end
 
     def generate_version(version)
-      render_erb('version.rb.erb')
+      render_erb('version.rb.erb', :version => version)
     end
 
     def generate_gemspec
       render_erb('generic.gemspec.erb')
     end
     
-    def render_erb(file)
+    def render_erb(file, locals = {})
+      b = binding
+      locals.each {|k,v| eval("#{k} = #{v.inspect}", b)}
       template = ERB.new(File.read(template_path(file)), 0, '<>')
-      template.result(binding)
+      template.result(b)
     end
   end
 end
