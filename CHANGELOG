@@ -1,3 +1,10 @@
+== 0.0.8
+
+* Removed junk (Joshua Hull, 887166c)
+* Cleanup whitespace (Nathan Esquenazi, 3e9b6c1)
+* clean up whitespace (Nathan Esquenazi, 536f32e)
+* reorder methods in gem.rb to put built_gem_path first (Nathan Esquenazi, 5d3f248)
+
 == 0.0.7
 
 * Moves successful generation message into CLI (Nathan Esquenazi, 2ce281f)
