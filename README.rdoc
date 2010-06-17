@@ -74,13 +74,15 @@ Once you've got Tumbler up and running in your gem, you will have access to the 
   rake version:push           # Push current version into git
   rake version:tag            # Tag current version into git
 
-==== Releasing your Gem
+==== Releasing Your Gem
 
-You can either do
+If you do the following,
 
   rake version:(tiny|minor|major):release
   
-which will bump the version, tag it in git, regenerate the changelog from your git commits and push the whole thing to rubygems and your remote or you can do it in two separate steps:
+you will bump the version, tag it in git, regenerate the changelog from your git commits and push the whole thing to rubygems and your remote.
+
+If you prefer you can do it in two steps (which give you a chance to edit the generated changelog)
 
   rake version:(tiny|minor|major):bump
   rake version:push
