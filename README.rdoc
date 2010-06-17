@@ -1,81 +1,112 @@
 = Tumbler
 
-Let's make gem development fun and not at all repetitive! A set of common tasks which should save you a fair bit of typing and give you more time for doing
-useful things with your life.
+Let's make gem development fun and remove all the repetition! Tumbler provides support for common gem management tasks which helps you spend less time dealing with gem releases and more time focusing on your gem functionality!
 
-== The pattern
+== Gem Guidelines
 
-Typically I want to make a gem, host it on github and tag versions. I want to use git as my source control, and use git to create sets of files. As well, I want to use Bundler to specify my dependencies, and then, I want those dependencies to automatically be in my gemspec. As well, I want to be a good citizen, and use gemspec's directly, instead of generating my gemspec from something.
+Tumbler was built to help developers create and manage gems using a common set of 'best practices' out of the box. Tumbler also makes a number of assumptions about your workflow:
+
+* Gem uses directly edited dynamic gemspecs
+* Gem uses Git to manage the source
+* Gem source will be hosted on Github
+* Git tags are created for each new version
+* Gem dependencies are defined using a Gemfile through Bundler
+
+If your gem can follow these guidelines, then Tumbler will automate the entirety of this process for you into rake tasks.
 
 == Using Tumbler
 
-=== For pre-existing projects
+=== Creating Gems
 
-If you have a pre-existing project, and want to use Tumbler, you have to a do a few things. If you're starting from scratch, you can skip this section.
+To generate a brand new gem from scratch, execute the following:
 
-For existing projects, you need to configure it to tell Tumbler to do its work. This is all done from a file at the root of your project called <tt>Tumbler</tt>. A typical <tt>Tumbler</tt> file will look something like this:
+  $ tumbler your_gem_name
+  
+This will generate a skeleton of your gem that you can then easily configure and start building awesome.
 
-  # Names the gem
+=== Existing Gems
+
+If you have a pre-existing gem which could benefit from Tumbler, you have to a do a few things. Note that if you are generating a new gem using the tumbler command, this will be done for you automatically.
+
+For existing projects, you need to instruct Tumbler to manage the gem tasks. This is all handled by a file at the root of your project called <tt>Tumbler</tt>. A typical <tt>Tumbler</tt> file should look something like the following:
+
+  # Names your gem
   gem_name 'my_awesome_gem'
   
-  # Use this file to track the version
+  # Use this file to track the version number
   version_file 'lib/my_awesome_gem/version.rb'
 
-  # Use this file to hang onto your changelog
+  # Use this file for your changelog
   changelog_file 'CHANGELOG'
 
-Your version number has to only be something parsable by Versionomy. The changelog will automatically be updated when you do releases.
+Your version number can be anything parsable by Versionomy. The changelog will be automatically updated when a new version is released.
 
-As well, in your +Rakefile+, add the following:
+The version file should have a constant <tt>VERSION</tt> which is set to the current version for your gem. A typical version file might look like the following:
+
+  # lib/awesome_gem/version.rb
+  module AwesomeGem #:nodoc
+    VERSION = '0.0.1'
+  end
+
+Next, in your +Rakefile+, add the following to get access to Tumbler tasks:
 
   require 'tumbler'
   Tumbler.use_rake_tasks
 
-Alternately, you can have Tumbler do all the work for you. If you install Tumbler to your system gems, you can say:
+Alternatively, you can have Tumbler do all this work for you. If you install Tumbler into your system gems, you can simply execute:
 
   tumbler . -u --name gem_name
   
-From inside your project directory, and it will take care of all these details for you.
+From inside the gem's root directory and this will take care of all these details for you.
 
-=== Generating an application from scratch
+=== Available Rake Tasks
 
-To generate an application from scratch, run the following:
-
-  tumbler your_gem_name
-  
-This will give you a skeleton of an application that you can fill out and make awesome.
-
-=== Day to day life with Tumbler as your friend
-
-Once you've got Tumbler up and running, you'll have access to the following tasks:
+Once you've got Tumbler up and running in your gem, you will have access to the following tasks:
 
   rake gem:build              # Build the gem
   rake gem:install            # Install the gem
   rake gem:push               # Push the gem
   rake version:major:bump     # Bump version from 0.2.12 ->  1.0.0
-  rake version:major:release  # Bump version from 0.2.12 ->  1.0.0 and push
   rake version:minor:bump     # Bump version from 0.2.12 ->  0.3.0
+  rake version:tiny:bump      # Bump version from 0.2.12 ->  0.2.13
+  rake version:major:release  # Bump version from 0.2.12 ->  1.0.0 and push
   rake version:minor:release  # Bump version from 0.2.12 ->  0.3.0 and push
+  rake version:tiny:release   # Bump version from 0.2.12 ->  0.2.13 and push
   rake version:push           # Push current version into git
   rake version:tag            # Tag current version into git
-  rake version:tiny:bump      # Bump version from 0.2.12 ->  0.2.13
-  rake version:tiny:release   # Bump version from 0.2.12 ->  0.2.13 and push
 
-Let's take a look a some common workflow:
-
-==== Releasing a new Gem
+==== Releasing your Gem
 
 You can either do
 
   rake version:(tiny|minor|major):release
   
-Which will bump the version, tag it in git, regenerate the changelog from your git commits and push the whole thing to rubygems and your remote or you can do it in two steps:
+which will bump the version, tag it in git, regenerate the changelog from your git commits and push the whole thing to rubygems and your remote or you can do it in two separate steps:
 
   rake version:(tiny|minor|major):bump
-  rake version:release
+  rake version:push
 
-This gives you a chance to review the changelog and do anything else you'd like to do before taking the plunge.
+This will give you the chance to review the changelog and do anything else you'd like before taking the final release plunge.
+
+=== Common Workflow
+
+Here is an example of a common usage for Tumbler. Let's say I want to create a new gem. Let's walk through the process:
+
+  $ tumbler your_gem_name
+  $ cd your_gem_name
+  
+This will generate the basic gem structure. Now we need to configure the 'your_gem_name.gemspec' with gem details and configure 'Gemfile' with the external dependencies. That's all you need to get started! From here, simply implement your gem. When ready for your first release you should first test locally:
+
+  # test your gem locally
+  $ rake gem:install
+  
+When you feel confident and you are ready to push your first version to git and rubygems, simply invoke:
+
+  # releases your gem
+  $ rake version:tiny:release
+  
+and that does it! Your gem is now released onto the world.
 
 == What's next?
 
-I'm sure there are bugs and other common workflows that I will add/document, but basically, I just wanna type a lot less when I bump a gem, and get things done.
+I'm sure there are bugs and other common workflows that I will add and/or document, but basically, I just wanna type a lot less when I bump a gem, and get more things done.
