@@ -9,7 +9,7 @@ module Tumbler
     def base
       @manager.base
     end
-    
+
     def built_gem_path
       "#{@manager.name}-#{@manager.version.to_s}.gem"
     end
