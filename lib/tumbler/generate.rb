@@ -112,22 +112,23 @@ module Tumbler
     end
 
     def generate_tumbler_conf
-      template = ERB.new(File.read(template_path('Tumbler.erb')))
-      template.result(binding)
+      render_erb('Tumbler.erb')
     end
 
     def generate_gemfile
-      template = ERB.new(File.read(template_path('Gemfile.erb')))
-      template.result(binding)
+      render_erb('Gemfile.erb')
     end
 
     def generate_version(version)
-      template = ERB.new(File.read(template_path('version.rb.erb')))
-      template.result(binding)
+      render_erb('version.rb.erb')
     end
 
     def generate_gemspec
-      template = ERB.new(File.read(template_path('generic.gemspec.erb')))
+      render_erb('generic.gemspec.erb')
+    end
+    
+    def render_erb(file)
+      template = ERB.new(File.read(template_path(file)), 0, '>')
       template.result(binding)
     end
   end
