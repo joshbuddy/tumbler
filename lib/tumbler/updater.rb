@@ -4,7 +4,6 @@ require 'json'
 
 class Tumbler
   class Updater
-
     def initialize(dir, opts = nil)
       @dir = dir
       @name = opts && opts[:name] || File.basename(File.expand_path(dir))
@@ -16,6 +15,13 @@ class Tumbler
       upgrade_version
       upgrade_changelog
       upgrade_rakefile
+      upgrade_tumbler_config
+    end
+
+    def upgrade_tumbler_config
+      unless File.exist?(tumbler_config_path)
+        Tumbler::Generate.app(@dir, @name).write_tumbler_config
+      end
     end
 
     def upgrade_deps
@@ -46,7 +52,7 @@ raise # (see below)
 
     def upgrade_changelog
       unless File.exists?(changelog_path)
-        File.open(changelog_path, 'w'){ |f| f << '' }
+        Tumbler::Generate.app(@dir, @name).write_changelog
       end
     end
 
@@ -60,6 +66,10 @@ raise # (see below)
 
     def rakefile_path
       File.join(@dir, 'Rakefile')
+    end
+
+    def tumbler_config_path
+      File.join(@dir, 'Tumbler')
     end
 
     def create_rakefile

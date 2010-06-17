@@ -51,4 +51,10 @@ describe Tumbler::Updater do
     File.read("#{@target}/rails/rails.gemspec").scan(/Tumbler::Gemspec.inject_dependencies/).size.should == 1
   end
   
+  it "should add a Tumbler config file if its not already there" do
+    File.unlink("#{@target}/rails/Tumbler")
+    Tumbler::Updater.new("#{@target}/rails", :name => 'rails').update
+    File.exist?("#{@target}/rails/Tumbler").should be_true
+  end
+  
 end
