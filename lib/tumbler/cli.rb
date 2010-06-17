@@ -61,6 +61,8 @@ module Tumbler
         FileUtils.mkdir_p(app_name)
         Tumbler::Generate.app(app_name, app_name, @options).write
       end
+      
+      puts "Gem '#{app_name}' generated successfully!"
     end
     
   end
