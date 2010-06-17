@@ -9,29 +9,3 @@
 
 * remove push task (Joshua Hull, b85b730)
 
-== 0.0.4
-
-
-
-== 0.0.3
-
-
-
-== 0.0.2
-
-
-
-== 0.0.1
-
-* added current directory to load path (Joshua Hull, 45c5db5)
-
-== 0.0.1
-
-* rollback version (Joshua Hull, 5c14fd9)
-
-== 0.0.1
-
-* reset version, changelog (Joshua Hull, 09e19dc)
-* Updated changelog (Joshua Hull, 161da98)
-* Bumped version from 0.0.0 to 0.0.1 (Joshua Hull, 654eb14)
-
