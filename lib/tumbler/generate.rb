@@ -128,7 +128,7 @@ module Tumbler
     end
     
     def render_erb(file)
-      template = ERB.new(File.read(template_path(file)), 0, '>')
+      template = ERB.new(File.read(template_path(file)), 0, '<>')
       template.result(binding)
     end
   end
