@@ -19,14 +19,10 @@ For existing projects, you need to configure it to tell Tumbler to do its work. 
   gem_name 'my_awesome_gem'
   
   # Use this file to track the version
-  use_version do
-    filename 'VERSION'
-  end
+  version_file 'lib/my_awesome_gem/version.rb'
 
   # Use this file to hang onto your changelog
-  use_changelog do
-    filename 'CHANGELOG'
-  end
+  changelog_file 'CHANGELOG'
 
 Your version number has to only be something parsable by Versionomy. The changelog will automatically be updated when you do releases.
 
