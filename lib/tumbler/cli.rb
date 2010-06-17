@@ -12,7 +12,7 @@ module Tumbler
       }
       parser.parse!(args)
     end
-    
+
     def parser
       OptionParser.new do |opts|
         opts.banner = "Usage: tumbler name [options]"
@@ -47,7 +47,7 @@ module Tumbler
         opts.on_tail("-h", "--help", "Show this help message.") { puts opts; exit }
       end
     end
-    
+
     def run
       app_name = ARGV.first
 
@@ -61,9 +61,9 @@ module Tumbler
         FileUtils.mkdir_p(app_name)
         Tumbler::Generate.app(app_name, app_name, @options).write
       end
-      
+
       puts "Gem '#{app_name}' generated successfully!"
     end
-    
+
   end
 end

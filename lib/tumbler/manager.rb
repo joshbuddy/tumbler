@@ -152,10 +152,10 @@ module Tumbler
     end
 
     private
-    def initialize(base)
-      @base = base
-      reload
-      @noop = true if ENV['DRY'] == '1'
-    end
+      def initialize(base)
+        @base = base
+        reload
+        @noop = true if ENV['DRY'] == '1'
+      end
   end
 end

@@ -3,9 +3,9 @@ require 'erb'
 
 module Tumbler
   class Generate
-    
+
     include Runner
-    
+
     def self.app(dir, name, opts = {})
       generator = Generate.new(dir, name)
       generator.version = opts[:version] if opts[:version]
@@ -26,7 +26,7 @@ module Tumbler
 
     attr_reader :development_dependencies, :dependencies, :base
     attr_accessor :version, :changelog
-    
+
     def initialize(dir, name)
       @base = dir
       @name = name
@@ -70,11 +70,11 @@ module Tumbler
       FileUtils.mkdir_p(File.dirname(version_path))
       File.open(version_path, 'w') {|f| f << generate_version(version) }
     end
-    
+
     def version_path
       File.join(@base, 'lib', @name, 'version.rb')
     end
-    
+
     def write_gemfile
       File.open(gemfile_file, 'w') {|f| f << generate_gemfile }
     end

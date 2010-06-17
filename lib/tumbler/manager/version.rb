@@ -21,7 +21,7 @@ module Tumbler
 
       def reload
         @version = Versionomy.parse(File.exist?(file) ? extract : '0.0.0')
-      end  
+      end
 
       def extract
         File.read(@file)[/Version\s*=\s*['"](.*?)['"]/i, 1]
@@ -53,11 +53,11 @@ module Tumbler
           reload
         end
       end
-    
+
       def commit(from)
         sh "git commit #{@basefile} -m'Bumped version from #{from} to #{to_s}'"
       end
-    
+
       def base
         @manager.base
       end
