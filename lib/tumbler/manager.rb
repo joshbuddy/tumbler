@@ -81,6 +81,7 @@ module Tumbler
       guard_already_tagged
       tag
       push
+      @gem.push
     end
 
     def bump_and_push(field)

@@ -30,6 +30,7 @@ describe Tumbler do
   
     it "should successfully push after a bump" do
       create_app do |app|
+        Tumbler::Gem.any_instance.stubs(:push).once.returns(true)
         app.bump_and_commit(:minor)
         app.tag_and_push
         app.reload
@@ -42,6 +43,7 @@ describe Tumbler do
   context "version bumping & pushing" do
     it "should create a nice changelog" do
       create_app do |app|
+        Tumbler::Gem.any_instance.stubs(:push).times(4).returns(true)
         app.sh 'touch test1; git add test1; git commit test1 -m"Added test1"'
         app.bump_and_push(:minor)
         app.sh 'touch test2; git add test2; git commit test2 -m"Added test2"'

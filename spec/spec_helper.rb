@@ -1,10 +1,14 @@
 require 'tempfile'
 require 'fileutils'
+require 'mocha'
 
 $LOAD_PATH << File.basename(__FILE__)
 $LOAD_PATH << File.join(File.basename(__FILE__), '..', 'lib')
 
 require 'tumbler'
+
+Tumbler::Gem.any_instance.stubs(:install).raises
+Tumbler::Gem.any_instance.stubs(:push).raises
 
 def create_app(name = 'test', opts = {})
   temp_dir(name) do |dir|

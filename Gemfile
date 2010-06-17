@@ -9,4 +9,5 @@ group :development do
   gem 'rake'
   gem 'rspec'
   gem 'fakeweb'
+  gem 'mocha'
 end

@@ -14,6 +14,7 @@ describe Tumbler::Manager::Changelog do
       tumbler.sh 'touch file2'
       tumbler.sh 'git add file2'
       tumbler.sh 'git commit file2 -m"added file2"'
+      Tumbler::Gem.any_instance.stubs(:push).once.returns(true)
       tumbler.bump_and_push(:tiny)
       tumbler.version.to_s.should == '0.0.1'
       changelog = File.read(tumbler.changelog.file)
@@ -29,6 +30,7 @@ describe Tumbler::Manager::Changelog do
       tumbler.sh 'touch file2'
       tumbler.sh 'git add file2'
       tumbler.sh 'git commit file2 -m"added file2"'
+      Tumbler::Gem.any_instance.stubs(:push).once.returns(true)
       tumbler.bump_and_push(:tiny)
       tumbler.version.to_s.should == '0.0.1'
       File.exist?(File.join(tumbler.base, 'CHANGELOG')).should be_false
