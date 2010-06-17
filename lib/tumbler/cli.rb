@@ -49,7 +49,6 @@ module Tumbler
     end
     
     def run
-      puts @options.inspect
       app_name = ARGV.first
 
       if app_name.nil?

@@ -6,3 +6,4 @@ $LOAD_PATH << File.join(File.dirname(__FILE__), '..', 'lib')
 require 'tumbler'
 
 Tumbler::CLI.run(ARGV)
+puts "Gem generated successfully!"
