@@ -4,6 +4,8 @@ require 'bundler'
 
 Callsite.activate_kernel_dir_methods
 
+$LOAD_PATH << __DIR__
+
 require 'tumbler/runner'
 require 'tumbler/updater'
 require 'tumbler/rake_tasks'
