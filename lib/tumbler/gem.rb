@@ -9,14 +9,14 @@ module Tumbler
     def base
       @manager.base
     end
+    
+    def built_gem_path
+      "#{@manager.name}-#{@manager.version.to_s}.gem"
+    end
 
     def push
       build
       sh("gem push #{built_gem_path}")
-    end
-
-    def built_gem_path
-      "#{@manager.name}-#{@manager.version.to_s}.gem"
     end
 
     def install
