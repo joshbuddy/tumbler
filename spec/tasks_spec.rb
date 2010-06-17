@@ -5,21 +5,10 @@ describe Tumbler do
     ENV['RUBYLIB'] = File.expand_path(File.join(__DIR__, '..', 'lib'))
   end
 
-  #before(:each) do
-  #  dir = File.expand_path(File.join(__DIR__, 'tmp'))
-  #  FileUtils.mkdir_p(dir)
-  #  @dir, @app = create_bare_app('test', :dir => dir)
-  #end
-  #
-  #after(:each) do
-  #  FileUtils.rm_rf(@dir)
-  #  $".delete "tumbler/gemspec.rb" # we need to delete this so each gemspec can be generated fresh
-  #end
-
   it "should gem.build" do
     create_app do |app|
       app.gem.build
-      File.exist?("pkg/#{app.base}/test-0.0.0.gem").should be_true
+      File.exist?("#{app.base}/pkg/test-0.0.0.gem").should be_true
     end
   end
 
