@@ -1,6 +1,6 @@
 require 'optparse'
 
-class Tumbler
+module Tumbler
   class CLI
     def self.run(args)
       CLI.new(args).run
@@ -8,8 +8,7 @@ class Tumbler
 
     def initialize(args)
       @options = {
-        :changelog => Changelog::DEFAULT_FILE,
-        :version => Version::INITIAL_VERSION
+        :changelog => Manager::Changelog::DEFAULT_FILE,
       }
       parser.parse!(args)
     end
@@ -37,7 +36,7 @@ class Tumbler
           @options[:version] = v
         end
 
-        opts.on("-nv", "--no-value", "Disable version") do |v|
+        opts.on("-nv", "--no-version", "Disable version") do |v|
           @options[:version] = nil
         end
 

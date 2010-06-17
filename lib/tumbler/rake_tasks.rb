@@ -1,4 +1,4 @@
-class Tumbler
+module Tumbler
   class RakeTasks
 
     def self.register(base, name)

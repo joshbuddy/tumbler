@@ -1,4 +1,4 @@
-class Tumbler
+module Tumbler
   class GemspecHelper
     def initialize(manager)
       @manager = manager

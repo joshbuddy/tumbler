@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'erb'
 
-class Tumbler
+module Tumbler
   class Generate
     
     include Runner
@@ -32,8 +32,12 @@ class Tumbler
       @name = name
       @dependencies = []
       @development_dependencies = []
-      @version = Version::INITIAL_VERSION
-      @changelog = Changelog::DEFAULT_FILE
+      @version = Manager::Version::INITIAL_VERSION
+      @changelog = Manager::Changelog::DEFAULT_FILE
+    end
+
+    def constant_name
+      @name.split('_').map{|p| p.capitalize}.join
     end
 
     def write
@@ -72,8 +76,13 @@ class Tumbler
       File.open(@changelog.file, "w") {|f| f << ''} unless File.exist?(@changelog.file)
     end
 
-    def write_version
-      File.open(File.join(@base, Version::DEFAULT_FILE), 'w') {|f| f << @version }
+    def write_version(version = Manager::Version::INITIAL_VERSION)
+      FileUtils.mkdir_p(File.dirname(version_path))
+      File.open(version_path, 'w') {|f| f << generate_version(version) }
+    end
+    
+    def version_path
+      File.join(@base, 'lib', @name, 'version.rb')
     end
     
     def write_gemfile
@@ -109,23 +118,21 @@ class Tumbler
     end
 
     def template_path(path)
-      File.join(File.dirname(__FILE__), '..', '..', 'template', path)
+      File.join(File.dirname(__FILE__), '..', 'template', path)
     end
 
     def generate_tumbler_conf
-      template = ERB.new(File.read(template_path('generic.Tumbler.erb')))
+      template = ERB.new(File.read(template_path('Tumbler.erb')))
       template.result(binding)
     end
 
     def generate_gemfile
-      template = ERB.new <<-EOF
-source :rubygems
+      template = ERB.new(File.read(template_path('Gemfile.erb')))
+      template.result(binding)
+    end
 
-<% @dependencies.each do |dep|%>gem <%=dep.name.inspect%>, <%=dep.requirement.to_s.inspect%><%="\n"%><% end %>
-group(:development) do
-<% development_dependencies.each do |dep|%>  gem <%=dep.name.inspect%>, <%=dep.requirement.to_s.inspect%><%="\n"%><% end %>
-end
-      EOF
+    def generate_version(version)
+      template = ERB.new(File.read(template_path('version.rb.erb')))
       template.result(binding)
     end
 

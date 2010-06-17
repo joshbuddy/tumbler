@@ -2,7 +2,7 @@ require 'net/http'
 require 'uri'
 require 'json'
 
-class Tumbler
+module Tumbler
   class Updater
     def initialize(dir, opts = nil)
       @dir = dir
@@ -79,11 +79,11 @@ raise # (see below)
     end
 
     def version_path
-      File.join(@dir, Version::DEFAULT_FILE)
+      File.join(@dir, 'lib', @name, 'version.rb')
     end
 
     def changelog_path
-      File.join(@dir, Changelog::DEFAULT_FILE)
+      File.join(@dir, Manager::Changelog::DEFAULT_FILE)
     end
 
     def gemspec_path

@@ -1,0 +1,17 @@
+source :rubygems
+
+# your dependencies go here
+# gem 'nokogiri'
+<% @dependencies.each do |dep|%>
+gem <%=dep.name.inspect%>, <%=dep.requirement.to_s.inspect%>
+<% end %>
+
+group :development do
+  # your development dependencies go here
+  # gem 'rake'
+  # gem 'rspect'
+<% development_dependencies.each do |dep| %>
+  gem <%=dep.name.inspect%>, <%=dep.requirement.to_s.inspect%>
+<% end %>
+end
+

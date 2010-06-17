@@ -1,6 +1,6 @@
 require 'spec/spec_helper'
 
-describe Tumbler::Changelog do
+describe Tumbler::Manager::Changelog do
 
   after(:each) do
     $".delete "tumbler/gemspec.rb" # we need to delete this so each gemspec can be generated fresh

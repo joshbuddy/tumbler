@@ -10,7 +10,7 @@ def create_app(name = 'test', opts = {})
   temp_dir(name) do |dir|
     temp_dir("remote-#{name}.git") do |remote_dir|
       Tumbler::Generate.app(dir, name, opts).write
-      tumbler = Tumbler.new(dir)
+      tumbler = Tumbler::Manager.new(dir)
 
       Dir.chdir(remote_dir) { `git --bare init` }
 
@@ -29,7 +29,7 @@ end
 def create_bare_app(name, opts = {})
   dir = temp_dir(name)
   Tumbler::Generate.app(dir, name, opts).write
-  tumbler = Tumbler.new(dir)
+  tumbler = Tumbler::Manager.new(dir)
   [dir, tumbler]
 end
 

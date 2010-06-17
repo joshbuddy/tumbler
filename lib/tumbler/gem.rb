@@ -1,4 +1,4 @@
-class Tumbler
+module Tumbler
   class Gem
     include Runner
 

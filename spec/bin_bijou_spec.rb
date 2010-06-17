@@ -15,7 +15,7 @@ describe 'bin/tumbler' do
     it "should generate an app" do
       Dir.chdir(@target) {`bundle exec ruby #{@bin} test_gem`}
       $?.should == 0
-      tumbler = Tumbler.new(File.join(@target, 'test_gem'))
+      tumbler = Tumbler.load(File.join(@target, 'test_gem'))
       tumbler.version.to_s.should == '0.0.0'
       tumbler.bundler.dependencies.first.name.should == 'tumbler'
       tumbler.bundler.dependencies.first.requirements_list.should == ['>= 0']
@@ -29,7 +29,7 @@ describe 'bin/tumbler' do
     end
     
     it "should do nothing on a normal existing tumbler app" do
-      tumbler = Tumbler.new(File.join(@target, 'rails'))
+      tumbler = Tumbler.load(File.join(@target, 'rails'))
       version_file = File.read(tumbler.version.file)
       changelog_file = File.read(tumbler.changelog.file)
       gemfile_file = File.read(tumbler.gemfile_path)
@@ -43,7 +43,7 @@ describe 'bin/tumbler' do
     end
 
     it "should work from inside the directory" do
-      tumbler = Tumbler.new(File.join(@target, 'rails'))
+      tumbler = Tumbler.load(File.join(@target, 'rails'))
       version_file = File.read(tumbler.version.file)
       changelog_file = File.read(tumbler.changelog.file)
       gemfile_file = File.read(tumbler.gemfile_path)
@@ -57,7 +57,7 @@ describe 'bin/tumbler' do
     end
 
     it "should not work if the directory and gemspec mismatch and you don't supply a name" do
-      tumbler = Tumbler.new(File.join(@target, 'rails'))
+      tumbler = Tumbler.load(File.join(@target, 'rails'))
       FileUtils.mv("#{@target}/rails/rails.gemspec", "#{@target}/rails/notrails.gemspec")
       Dir.chdir(@target) {`bundle exec ruby #{@bin} rails -u`}
       $?.exitstatus.should == 1

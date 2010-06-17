@@ -1,9 +1,4 @@
 gem_name 'tumbler'
 
-use_version do
-  filename 'VERSION'
-end
-
-use_changelog do
-  filename 'CHANGELOG'
-end
+version_file 'lib/tumbler/version.rb'
+changelog_file 'CHANGELOG'

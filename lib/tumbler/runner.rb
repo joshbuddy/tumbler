@@ -1,4 +1,4 @@
-class Tumbler
+module Tumbler
   module Runner
 
     attr_accessor :noop
