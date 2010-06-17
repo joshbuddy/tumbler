@@ -1,3 +1,10 @@
+== 0.0.6
+
+* corrected docs. correct version (Joshua Hull, a3ee9bc)
+* new version scheme (Joshua Hull, 631c067)
+* restructure (Joshua Hull, 641ea47)
+* create Tumbler config on update (Joshua Hull, e26b306)
+
 == 0.0.5
 
 * remove push task (Joshua Hull, b85b730)
