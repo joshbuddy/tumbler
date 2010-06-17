@@ -1,3 +1,11 @@
+== 0.0.9
+
+* Allow custom binding to be passed when rendering erb (Nathan Esquenazi, 4ccc567)
+* Allow passing local variables into the ERB binding (Joshua Hull, 734eed7)
+* Switch to <> mode for erb templates (Nathan Esquenazi, 6b5fbf2)
+* Trim whitespace on erb to remove unnecessary newlines, and refactor by creating render_erb method (Nathan Esquenazi, 17de8e8)
+* Gem is now built in pkg, updated spec to reflect that. (Joshua Hull, 620e514)
+
 == 0.0.8
 
 * Removed junk (Joshua Hull, 887166c)
