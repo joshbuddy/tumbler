@@ -7,6 +7,7 @@ Gem::Specification.new do |s|
   s.version = Tumbler::Gemspec.version
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
+  s.rubyforge_project = Tumbler::Gemspec.name
   s.authors = ["Joshua Hull"]
   s.date = Tumbler::Gemspec.date
   s.description = %q{Description}

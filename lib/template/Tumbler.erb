@@ -1,9 +1,9 @@
-gem_name <%=@name.inspect%>
+gem_name <%= @name.inspect %>
 
 <% if @version %>
-version_file 'lib/<%=@name%>/version.rb'
+version_file 'lib/<%= @name %>/version.rb'
 <% end %>
 
 <% if @changelog %>
-changelog_file <%=@changelog.inspect%>
+changelog_file <%= @changelog.inspect %>
 <% end %>
