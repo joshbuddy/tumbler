@@ -1,3 +1,14 @@
+== 0.0.7
+
+* Moves successful generation message into CLI (Nathan Esquenazi, 2ce281f)
+* Output a success message in tumbler binary (Nathan Esquenazi, f6403e6)
+* Build gems into pkg sub directory and install from there (Nathan Esquenazi, 35140d4)
+* Ignore files in pkg directory (Nathan Esquenazi, 4c20085)
+* Tone down Github requirement in README (since its not necessary) (Nathan Esquenazi, 325716a)
+* Added rubyforge_project to gemspec by default to remove warning (Nathan Esquenazi, 9b35929)
+* Cleaned up README (Nathan Esquenazi, 02221fe)
+* removed old changelog crap (Joshua Hull, b8632d4)
+
 == 0.0.6
 
 * corrected docs. correct version (Joshua Hull, a3ee9bc)
