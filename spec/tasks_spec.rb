@@ -19,7 +19,7 @@ describe Tumbler do
   it "should gem.build" do
     create_app do |app|
       app.gem.build
-      File.exist?("#{app.base}/test-0.0.0.gem").should be_true
+      File.exist?("pkg/#{app.base}/test-0.0.0.gem").should be_true
     end
   end
 

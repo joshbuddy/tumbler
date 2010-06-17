@@ -21,7 +21,7 @@ module Tumbler
 
     def install
       build
-      exec("sudo gem install #{built_gem_path}")
+      exec("sudo gem install pkg/#{built_gem_path}")
     end
 
     def spec_path
@@ -30,6 +30,8 @@ module Tumbler
 
     def build
       sh("bundle exec gem build #{spec_path}")
+      sh("mkdir -p pkg")
+      sh("mv -f #{built_gem_path} pkg/")
     end
   end
 end
