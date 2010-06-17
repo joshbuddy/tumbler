@@ -1,5 +1,9 @@
 == 0.0.1
 
+* added current directory to load path (Joshua Hull, 45c5db5)
+
+== 0.0.1
+
 * rollback version (Joshua Hull, 5c14fd9)
 
 == 0.0.1
