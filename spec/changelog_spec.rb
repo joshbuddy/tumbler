@@ -17,8 +17,7 @@ describe Tumbler::Manager::Changelog do
       Tumbler::Gem.any_instance.stubs(:push).once.returns(true)
       tumbler.bump_and_push(:tiny)
       tumbler.version.to_s.should == '0.0.1'
-      changelog = File.read(tumbler.changelog.file)
-      changelog.should match(/== 0\.0\.1\s+\* added file2 \(.*?, [a-f0-9]{7}\)\s+\* added file1 \(.*?, [a-f0-9]{7}\)/)
+      tumbler.changelog.file.should match_in_file(/== 0\.0\.1\s+\* added file2 \(.*?, [a-f0-9]{7}\)\s+\* added file1 \(.*?, [a-f0-9]{7}\)/)
     }
   end
 
@@ -50,5 +49,4 @@ describe Tumbler::Manager::Changelog do
       tumbler.sh('git log').split(/\n/)[0].should == "commit #{current_rev}"
     }
   end
-
 end

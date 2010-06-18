@@ -52,10 +52,33 @@ def temp_dir(name)
   end
 end
 
-def match_in_file(file,pattern)
-  if File.exists?(file)
-    File.read(file) =~ pattern ? true : false
-  else
-    false
+module Matchers
+  class MatchInFile
+    def initialize(pattern)
+      @pattern = pattern
+    end
+
+    def matches?(file)
+      @file = file
+      @file = File.exist?(file) ? File.read(file) : false
+      @file and @file =~ @pattern
+    end
+    
+    def failure_message
+      "expected #{@pattern} to match in '#{@file}'"
+    end
+
+    def negative_failure_message
+      "expected #{@pattern} to not match in '#{@file}'"
+    end
   end
+  
+  def match_in_file(expected)
+    MatchInFile.new(expected)
+  end
+  
+end
+
+Spec::Runner.configure do |config|  
+  config.include(Matchers)
 end

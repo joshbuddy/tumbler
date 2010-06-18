@@ -16,14 +16,14 @@ describe Tumbler::Generate do
   it "should generate the gem constant correctly with -" do
     temp_dir('test') do |test_dir|
       Tumbler::Generate.app(test_dir, 'my-gem', :changelog => nil).write
-      match_in_file(File.join(test_dir, 'lib','my-gem','version.rb'), %r{My::Gem}).should be_true
+      File.join(test_dir, 'lib','my-gem','version.rb').should match_in_file(/My::Gem/)
     end
   end
 
   it "should generate the gem constant correctly with _" do
     temp_dir('test') do |test_dir|
       Tumbler::Generate.app(test_dir, 'my_gem', :changelog => nil).write
-      match_in_file(File.join(test_dir, 'lib','my_gem','version.rb'), %r{MyGem}).should be_true
+      File.join(test_dir, 'lib','my_gem','version.rb').should match_in_file(/MyGem/)
     end
   end
 
