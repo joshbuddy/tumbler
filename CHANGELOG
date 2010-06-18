@@ -1,3 +1,10 @@
+== 0.0.11
+
+* Merge branch 'master' of github.com:joshbuddy/tumbler (Joshua Hull, 407497c)
+* Use custom matcher for searching in file. (Joshua Hull, 8d16801)
+* Merge remote branch 'achiu/master' (Joshua Hull, c69550d)
+* add tests for to check constant_name and also to handle '-' => :: (Arthur Chiu, 824e022)
+
 == 0.0.10
 
 * Added preflight task for easy injection of arbitrary code before tumbler runs. (Joshua Hull, bdb7ed7)
