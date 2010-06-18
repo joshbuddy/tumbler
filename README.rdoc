@@ -74,6 +74,12 @@ Once you've got Tumbler up and running in your gem, you will have access to the 
   rake version:push           # Push current version into git
   rake version:tag            # Tag current version into git
 
+There is a special rake task you can override, <tt>'tumbler:preflight'</tt>, if you'd like to run specs or do some other task before any of the tumbler tasks get invoked. For instance, to invoke +spec+ before you run your main tasks, you could add:
+
+  task 'tumbler:preflight' do
+    Rake::Task["spec"].invoke
+  end
+
 ==== Releasing Your Gem
 
 If you do the following,
