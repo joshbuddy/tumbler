@@ -19,7 +19,7 @@ describe Tumbler::GemspecHelper do
   end
 
   it "should have files" do
-    @helper.files.should == ["CHANGELOG", "Gemfile", "Rakefile", "Tumbler", "lib/test/version.rb", "test.gemspec"]
+    @helper.files.should == ["CHANGELOG", "Gemfile", "Rakefile", "Tumbler", "lib/test.rb", "lib/test/version.rb", "test.gemspec"]
   end
 
   it "should have a date" do

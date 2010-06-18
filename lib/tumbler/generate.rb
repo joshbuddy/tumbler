@@ -24,7 +24,7 @@ module Tumbler
       generator
     end
 
-    attr_reader :development_dependencies, :dependencies, :base
+    attr_reader :development_dependencies, :dependencies, :base, :name
     attr_accessor :version, :changelog
 
     def initialize(dir, name)
@@ -46,6 +46,7 @@ module Tumbler
       write_gemspec
       write_gemfile
       write_version(@version)
+      write_file
       write_changelog
       write_rakefile
       write_tumbler_config
@@ -75,6 +76,15 @@ module Tumbler
 
     def version_path
       File.join(@base, 'lib', @name, 'version.rb')
+    end
+
+    def rb_path
+      File.join(@base, 'lib', "#{@name}.rb")
+    end
+
+    def write_file
+      FileUtils.mkdir_p(File.dirname(rb_path))
+      File.open(rb_path, 'w') {|f| f << generate_file }
     end
 
     def write_gemfile
@@ -125,10 +135,14 @@ module Tumbler
       render_erb('version.rb.erb', binding)
     end
 
+    def generate_file
+      render_erb('generic.rb.erb')
+    end
+
     def generate_gemspec
       render_erb('generic.gemspec.erb')
     end
-    
+
     def render_erb(file, local_binding=binding)
       template = ERB.new(File.read(template_path(file)), 0, '<>')
       template.result(local_binding)

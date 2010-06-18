@@ -22,8 +22,11 @@ describe Tumbler::Generate do
   
   it "should generate the mygem.rb file" do
     temp_dir('test') do |test_dir|
-      Tumbler::Generate.app(test_dir, 'mygem', :changelog => nil).write
-      File.exist?(File.join(test_dir, "lib", 'mygem.rb')).should be_true
+      Tumbler::Generate.app(test_dir, 'my_gem', :changelog => nil).write
+      path = File.join(test_dir, "lib", 'my_gem.rb')
+      File.exist?(path).should be_true
+      path.should match_in_file %r{module MyGem #:nodoc}
+      path.should match_in_file %r{require 'my_gem'}
     end
   end
   
