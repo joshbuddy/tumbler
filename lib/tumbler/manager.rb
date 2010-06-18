@@ -70,13 +70,11 @@ module Tumbler
       guard_clean
       @changelog.update if @changelog
       bump(field)
-      if @changelog
-        @changelog.write_version_header
-        @changelog.commit
-      end
+      @changelog.write_version_header if @changelog
     end
 
     def tag_and_push
+      @changelog.commit if @changelog
       guard_clean
       guard_already_tagged
       tag

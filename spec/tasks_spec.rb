@@ -38,6 +38,14 @@ describe Tumbler do
         app.tags.should == %w(0.0.0 0.1.0)
       end
     end
+
+    it "shouldn't commit the changed changelog on a simple bump" do
+      create_app do |app|
+        app.bump_and_commit(:minor)
+        app.sh('git status').should match(/modified:\s+CHANGELOG/)
+      end
+    end
+
   end
   
   context "version bumping & pushing" do
