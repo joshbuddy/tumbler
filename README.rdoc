@@ -117,3 +117,7 @@ and that does it! Your gem is now released onto the world.
 == What's next?
 
 I'm sure there are bugs and other common workflows that I will add and/or document, but basically, I just wanna type a lot less when I bump a gem, and get more things done.
+
+== How is this different from Jeweler?
+
+Clearly worth explaining briefly how this gem differs from Jeweler to help people to understand why they might want to use this instead. Will flesh this section out very soon. Dynamic gemspec, better version practice, closer integration to git, et. al
