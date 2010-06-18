@@ -71,7 +71,7 @@ module Tumbler
 
     def write_version(version)
       FileUtils.mkdir_p(File.dirname(version_path))
-      File.open(version_path, 'w') {|f| f << generate_version(version) }
+      File.open(version_path, 'w') {|f| f << render_erb('version.rb.erb', binding) }
     end
 
     def version_path
@@ -88,7 +88,7 @@ module Tumbler
     end
 
     def write_gemfile
-      File.open(gemfile_file, 'w') {|f| f << generate_gemfile }
+      File.open(gemfile_file, 'w') {|f| f << render_erb('Gemfile.erb') }
     end
 
     def write_rakefile
@@ -96,7 +96,7 @@ module Tumbler
     end
 
     def write_gemspec
-      File.open(File.join(@base, "#{@name}.gemspec"), 'w') {|f| f << generate_gemspec }
+      File.open(File.join(@base, "#{@name}.gemspec"), 'w') {|f| f << render_erb('generic.gemspec.erb') }
     end
 
     def write_changelog
@@ -104,7 +104,7 @@ module Tumbler
     end
 
     def write_tumbler_config
-      File.open(config_file, 'w') {|f| f << generate_tumbler_conf}
+      File.open(config_file, 'w') {|f| f << render_erb('Tumbler.erb') }
     end
 
     def git_email
@@ -121,26 +121,6 @@ module Tumbler
 
     def template_path(path)
       File.join(File.dirname(__FILE__), '..', 'template', path)
-    end
-
-    def generate_tumbler_conf
-      render_erb('Tumbler.erb')
-    end
-
-    def generate_gemfile
-      render_erb('Gemfile.erb')
-    end
-
-    def generate_version(version)
-      render_erb('version.rb.erb', binding)
-    end
-
-    def generate_file
-      render_erb('generic.rb.erb')
-    end
-
-    def generate_gemspec
-      render_erb('generic.gemspec.erb')
     end
 
     def render_erb(file, local_binding=binding)
