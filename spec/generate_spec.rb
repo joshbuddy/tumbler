@@ -26,6 +26,7 @@ describe Tumbler::Generate do
       path = File.join(test_dir, "lib", 'my_gem.rb')
       File.exist?(path).should be_true
       path.should match_in_file %r{module MyGem #:nodoc}
+      path.should match_in_file %r{require 'my_gem/version'}
     end
   end
   
