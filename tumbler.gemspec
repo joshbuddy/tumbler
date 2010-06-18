@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project = Tumbler::Gemspec.name
   s.authors = ["Joshua Hull"]
   s.date = Tumbler::Gemspec.date
-  s.description = %q{Description}
+  s.summary = s.description = "Let's make gem development fun and remove all the repetition! Tumbler provides support for common gem management tasks which helps you spend less time dealing with gem releases and more time focusing on your gem functionality!"
   s.email = %q{joshbuddy@gmail.com}
   s.extra_rdoc_files = Tumbler::Gemspec.files('README.rdoc')
   s.files = Tumbler::Gemspec.files
@@ -18,7 +18,6 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
-  s.summary = %q{This is awesome.}
   s.test_files = Tumbler::Gemspec.files(/^spec/)
   s.executables = Tumbler::Gemspec.bin_files
 
