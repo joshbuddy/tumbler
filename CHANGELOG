@@ -1,3 +1,11 @@
+== 0.0.10
+
+* Added preflight task for easy injection of arbitrary code before tumbler runs. (Joshua Hull, bdb7ed7)
+* More explicit instructions for releasing in two steps (Joshua Hull, a836489)
+* Cleaned up spec, removed debug output (Joshua Hull, 75e2b2d)
+* Removed whitespace (Joshua Hull, 6a66d7d)
+* Gem#push on successful bumps (Joshua Hull, c359a1d)
+
 == 0.0.9
 
 * Allow custom binding to be passed when rendering erb (Nathan Esquenazi, 4ccc567)
