@@ -64,14 +64,13 @@ module Tumbler
     def gemfile_file
       File.join(@base, 'Gemfile')
     end
+    
+    def gemspec_file
+      File.join(@base, "#{@name}.gemspec")
+    end
 
     def config_file
       File.join(@base, 'Tumbler')
-    end
-
-    def write_version(version)
-      FileUtils.mkdir_p(File.dirname(version_path))
-      File.open(version_path, 'w') {|f| f << render_erb('version.rb.erb', binding) }
     end
 
     def version_path
@@ -81,30 +80,33 @@ module Tumbler
     def rb_path
       File.join(@base, 'lib', "#{@name}.rb")
     end
-
-    def write_file
-      FileUtils.mkdir_p(File.dirname(rb_path))
-      File.open(rb_path, 'w') {|f| f << generate_file }
+    
+    def write_changelog
+      File.open(File.join(@base, @changelog), 'w') {|f| f << '' } if @changelog
     end
-
-    def write_gemfile
-      File.open(gemfile_file, 'w') {|f| f << render_erb('Gemfile.erb') }
-    end
-
+    
     def write_rakefile
       FileUtils.cp(template_path('Rakefile'), @base)
     end
 
-    def write_gemspec
-      File.open(File.join(@base, "#{@name}.gemspec"), 'w') {|f| f << render_erb('generic.gemspec.erb') }
+    def write_file
+      copy_template('generic.rb.erb', :to => rb_path)
+    end
+    
+    def write_version(version)
+      copy_template('version.rb.erb', :to => version_path, :binding => binding)
     end
 
-    def write_changelog
-      File.open(File.join(@base, @changelog), 'w') {|f| f << '' } if @changelog
+    def write_gemfile
+      copy_template('Gemfile.erb', :to => gemfile_file)
+    end
+
+    def write_gemspec
+      copy_template('generic.gemspec.erb', :to => gemspec_file)
     end
 
     def write_tumbler_config
-      File.open(config_file, 'w') {|f| f << render_erb('Tumbler.erb') }
+      copy_template('Tumbler.erb', :to => config_file)
     end
 
     def git_email
@@ -123,9 +125,12 @@ module Tumbler
       File.join(File.dirname(__FILE__), '..', 'template', path)
     end
 
-    def render_erb(file, local_binding=binding)
-      template = ERB.new(File.read(template_path(file)), 0, '<>')
-      template.result(local_binding)
+    # copy_template('generic.rb.erb', :to => '/path/to/file')
+    def copy_template(template_file, options={})
+      FileUtils.mkdir_p(File.dirname(options[:to]))
+      template = ERB.new(File.read(template_path(template_file)), 0, '<>')
+      contents = template.result(options[:binding] || binding)
+      File.open(options[:to], 'w') {|f| f << contents }
     end
   end
 end
