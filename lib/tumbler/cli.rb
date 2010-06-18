@@ -1,69 +1,27 @@
-require 'optparse'
+require 'thor/group'
 
 module Tumbler
-  class CLI
-    def self.run(args)
-      CLI.new(args).run
-    end
+  class Cli < Thor::Group
+    include Thor::Actions
 
-    def initialize(args)
-      @options = {
-        :changelog => Manager::Changelog::DEFAULT_FILE,
-      }
-      parser.parse!(args)
-    end
+    def self.banner; "tumbler name [options]"; end
 
-    def parser
-      OptionParser.new do |opts|
-        opts.banner = "Usage: tumbler name [options]"
+    desc "Generates a new gem project"
 
-        opts.separator ""
-        opts.separator "Options:"
+    argument :name, :desc => "name of your awesome gem"
 
-        opts.on("-cVALUE", "--changelog=VALUE", "Set changelog file") do |v|
-          @options[:changelog] = v
-        end
-
-        opts.on("-u", "--update", "Update existing application") do |v|
-          @options[:update] = nil
-        end
-
-        opts.on("-nc", "--no-changelog", "Disable changelog") do |v|
-          @options[:changelog] = nil
-        end
-
-        opts.on("-vVALUE", "--version=VALUE", "Set version file") do |v|
-          @options[:version] = v
-        end
-
-        opts.on("-nv", "--no-version", "Disable version") do |v|
-          @options[:version] = nil
-        end
-
-        opts.on("-vNAME", "--name=NAME", "Set gem name") do |v|
-          @options[:name] = v
-        end
-
-        opts.on_tail("-h", "--help", "Show this help message.") { puts opts; exit }
+    class_option :changelog, :desc => 'Set the CHANGELOG file',       :aliases => '-c', :default => nil,   :type => :string
+    class_option :update,    :desc => 'Update existing application',  :aliases => '-u', :default => false, :type => :boolean
+    class_option :version,   :desc => 'Set the version number',       :aliases => '-v', :default => nil,   :type => :string
+    class_option :root,      :desc => 'set root path',                :aliases => '-r', :default => '.',   :type => :string
+    def setup_gem
+      path = File.join options[:root], name
+      case
+      when options[:update] then Tumbler::Updater.new(path, options).update
+      when File.exist?(path) then raise("Directory path #{path} already exists!")
+      else FileUtils.mkdir_p(path) ; Tumbler::Generate.app(path, name, options).write
       end
+      say "Gem #{name} successfully generated!", :green
     end
-
-    def run
-      app_name = ARGV.first
-
-      if app_name.nil?
-        raise 'You must supply an application name.'
-      elsif @options.key?(:update)
-        Tumbler::Updater.new(app_name, @options).update
-      elsif File.exist?(app_name)
-        raise "There is already a directory named #{app_name}"
-      else
-        FileUtils.mkdir_p(app_name)
-        Tumbler::Generate.app(app_name, app_name, @options).write
-      end
-
-      puts "Gem '#{app_name}' generated successfully!"
-    end
-
   end
 end
