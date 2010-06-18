@@ -15,31 +15,42 @@ describe Tumbler::Generate do
 
   it "should generate the mygem directory" do
     temp_dir('test') do |test_dir|
-      Tumbler::Generate.app(test_dir, 'mygem', :changelog => nil).write
+      Tumbler::Generate.app(test_dir, 'mygem').write
       File.exist?(File.join(test_dir, "lib", "mygem")).should be_true
     end
   end
   
   it "should generate the mygem.rb file" do
     temp_dir('test') do |test_dir|
-      Tumbler::Generate.app(test_dir, 'my_gem', :changelog => nil).write
+      Tumbler::Generate.app(test_dir, 'my_gem').write
       path = File.join(test_dir, "lib", 'my_gem.rb')
       File.exist?(path).should be_true
       path.should match_in_file %r{module MyGem #:nodoc}
-      path.should match_in_file %r{require 'my_gem/version'}
+      path.should match_in_file %r{require 'my_gem/version'\n}
+    end
+  end
+  
+  it "should generate the mygem.rb file without the version require if no version is being used" do
+    pending
+    temp_dir('test') do |test_dir|
+      Tumbler::Generate.app(test_dir, 'my_gem', :version => nil).write
+      path = File.join(test_dir, "lib", 'my_gem.rb')
+      File.exist?(path).should be_true
+      path.should match_in_file %r{module MyGem #:nodoc}
+      path.should_not match_in_file %r{require 'my_gem/version'\n}
     end
   end
   
   it "should generate the gem constant correctly with -" do
     temp_dir('test') do |test_dir|
-      Tumbler::Generate.app(test_dir, 'my-gem', :changelog => nil).write
+      Tumbler::Generate.app(test_dir, 'my-gem').write
       File.join(test_dir, 'lib','my-gem','version.rb').should match_in_file(/My::Gem/)
     end
   end
 
   it "should generate the gem constant correctly with _" do
     temp_dir('test') do |test_dir|
-      Tumbler::Generate.app(test_dir, 'my_gem', :changelog => nil).write
+      Tumbler::Generate.app(test_dir, 'my_gem').write
       File.join(test_dir, 'lib','my_gem','version.rb').should match_in_file(/MyGem/)
     end
   end
