@@ -13,6 +13,20 @@ describe Tumbler::Generate do
     end
   end
 
+  it "should generate the mygem directory" do
+    temp_dir('test') do |test_dir|
+      Tumbler::Generate.app(test_dir, 'mygem', :changelog => nil).write
+      File.exist?(File.join(test_dir, "lib", "mygem")).should be_true
+    end
+  end
+  
+  it "should generate the mygem.rb file" do
+    temp_dir('test') do |test_dir|
+      Tumbler::Generate.app(test_dir, 'mygem', :changelog => nil).write
+      File.exist?(File.join(test_dir, "lib", 'mygem.rb')).should be_true
+    end
+  end
+  
   it "should generate the gem constant correctly with -" do
     temp_dir('test') do |test_dir|
       Tumbler::Generate.app(test_dir, 'my-gem', :changelog => nil).write
