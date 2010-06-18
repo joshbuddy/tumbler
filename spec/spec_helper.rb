@@ -51,3 +51,11 @@ def temp_dir(name)
     dir
   end
 end
+
+def match_in_file(file,pattern)
+  if File.exists?(file)
+    File.read(file) =~ pattern ? true : false
+  else
+    false
+  end
+end
