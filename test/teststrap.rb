@@ -3,6 +3,8 @@ require 'tempfile'
 require 'fileutils'
 require 'riot'
 require 'mocha'
+require 'fakeweb'
+FakeWeb.allow_net_connect = false
 
 #Dir.glob(File.join(File.dirname(__FILE__),'macros')) { |file|  require file }
 
@@ -16,25 +18,18 @@ Tumbler::Gem.any_instance.stubs(:push).raises
 
 Riot.reporter = Riot::DotMatrixReporter
 class Riot::Situation
-  
-  def create_app(name = 'test', opts = {})
-    temp_dir(name) do |dir|
-      temp_dir("remote-#{name}.git") do |remote_dir|
-        Tumbler::Generate.app(dir, name, opts).write
-        tumbler = Tumbler::Manager.new(dir)
 
-        Dir.chdir(remote_dir) { `git --bare init` }
-
-        remote = opts[:remote] || "file://#{remote_dir}"
-
-        Dir.chdir(dir) {
-          `git remote add origin #{remote}`
-          `git push origin master`
-        }
-
-        yield tumbler
-      end
-    end
+  def create_app(name='test', opts={})
+    @dir = temp_dir(name)
+    @remote_dir = temp_dir("remote-#{name}.git")
+    Tumbler::Generate.app(@dir, name, opts).write
+    Dir.chdir(@remote_dir) { `git --bare init` }
+    remote = opts[:remote] || "file://#{@remote_dir}"
+    Dir.chdir(@dir) {
+      `git remote add origin #{remote}`
+      `git push origin master`
+    }
+    [Tumbler::Manager.new(@dir), @dir, @remote_dir]
   end
 
   def create_bare_app(name, opts = {})
@@ -62,7 +57,7 @@ class Riot::Situation
 end
 
 class Riot::Context
-  
+
 end
 
 class Object
@@ -72,7 +67,7 @@ class Object
       eval "$#{stream} = StringIO.new"
       yield
       result = eval("$#{stream}").string
-    ensure 
+    ensure
       eval("$#{stream} = #{stream.upcase}")
     end
     result
