@@ -3,9 +3,6 @@ require 'tempfile'
 require 'fileutils'
 require 'riot'
 require 'mocha'
-require 'fakeweb'
-FakeWeb.allow_net_connect = false
-
 #Dir.glob(File.join(File.dirname(__FILE__),'macros')) { |file|  require file }
 
 $LOAD_PATH << File.basename(__FILE__)
