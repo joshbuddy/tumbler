@@ -3,7 +3,6 @@ require 'tempfile'
 require 'fileutils'
 require 'riot'
 require 'mocha'
-#Dir.glob(File.join(File.dirname(__FILE__),'macros')) { |file|  require file }
 
 $LOAD_PATH << File.basename(__FILE__)
 $LOAD_PATH << File.join(File.basename(__FILE__), '..', 'lib')

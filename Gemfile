@@ -8,7 +8,7 @@ gem 'thor', :require => 'thor/group'
 
 group :development do
   gem 'rake'
-  gem 'rspec'
+  gem 'riot'
   gem 'fakeweb'
   gem 'mocha'
   gem 'blockenspiel'

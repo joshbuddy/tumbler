@@ -6,10 +6,9 @@ Tumbler.use_rake_tasks
 #   Rake::Task["spec"].invoke
 # end
 
-require 'spec'
-require 'spec/rake/spectask'
-Spec::Rake::SpecTask.new(:spec) do |t|
-  t.spec_opts ||= []
-  t.spec_opts << "--options" << "spec/spec.opts"
-  t.spec_files = FileList['spec/**/*_spec.rb']
+require 'rake/testtask'
+Rake::TestTask.new(:test) do |test|
+  test.libs << 'lib' << 'test'
+  test.pattern = 'test/**/*_test.rb'
+  test.verbose = true
 end
