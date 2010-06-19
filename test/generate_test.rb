@@ -32,6 +32,7 @@ context "Generate" do
     end
     asserts("exists") { File.exists? topic }
     asserts("module") { File.read topic }.matches %r{module MyGem #:nodoc}
+    # unsure whether or not this should be done.
     asserts("require") { File.read(topic) =~ %r{require 'my_gem/version'\n} }.not!
   end
 
