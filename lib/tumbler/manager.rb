@@ -74,7 +74,7 @@ module Tumbler
     end
 
     def tag_and_push
-      @changelog.commit if @changelog
+      @changelog.commit if @changelog && !clean?
       guard_clean
       guard_already_tagged
       tag
