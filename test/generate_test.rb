@@ -10,6 +10,11 @@ context "Generate" do
     asserts("has changelog") { File.exist? File.join(@test_dir, "CHANGELOG") }.not!
   end
 
+  context "generate changelog with specified name" do
+    setup { Tumbler::Generate.app(@test_dir, 'my_gem', :change_log => 'CHANGES').write }
+    asserts("has changes") { File.exists? File.join(@test_dir,'CHANGES') }
+  end
+  
   context "generate mygem directory" do
     setup { Tumbler::Generate.app(@test_dir, 'mygem').write }
     asserts("dir exists") { File.exist? File.join(@test_dir, "lib", "mygem") }
@@ -25,15 +30,25 @@ context "Generate" do
     asserts("has require") { File.read(topic) }.matches %r{require 'my_gem/version'\n}
   end
 
-  context "generate the mygem.rb file without the version require if no version is being used" do
+  context "surpress version.rb creation if disabled" do
     setup do
       Tumbler::Generate.app(@test_dir, 'my_gem', :version => nil).write
       File.join(@test_dir, "lib", 'my_gem.rb')
     end
     asserts("exists") { File.exists? topic }
     asserts("module") { File.read topic }.matches %r{module MyGem #:nodoc}
-    # unsure whether or not this should be done.
+    asserts("version.rb") { File.exists? File.join(@test_dir,'lib/my_gem/version.rb') }.not!
     asserts("require") { File.read(topic) =~ %r{require 'my_gem/version'\n} }.not!
+  end
+
+  context "generate the version.rb if specified" do
+    setup do
+      Tumbler::Generate.app(@test_dir, 'my_gem', :version => '1.0.0').write
+      File.join(@test_dir,'lib','my_gem','version.rb')
+    end
+    asserts("exists") { File.exists? topic }
+    asserts("module") { File.read topic }.matches %r{module MyGem #:nodoc}
+    asserts("version") { File.read topic }.matches %r{1.0.0}
   end
 
   context "generate the gem constant correctly with -" do

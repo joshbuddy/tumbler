@@ -1,0 +1,8 @@
+gem_name <%= name %>
+
+<% if options[:version] %>
+version_file 'lib/<%= name %>/version.rb'
+<% end %>
+<% if options[:changelog] %>
+changelog_file <%= options[:changelog] %>
+<% end %>

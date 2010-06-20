@@ -12,13 +12,11 @@ module Tumbler
       generator.changelog = opts[:changelog] if opts.key?(:changelog)
       generator.development_dependencies << ::Gem::Dependency.new('tumbler')
       if opts[:dependencies]
-        Array(opts[:dependencies]).each do |dep|
-          generator.dependencies << (dep.is_a?(Array) ? ::Gem::Dependency.new(*dep) : ::Gem::Dependency.new(dep))
-        end
+        Array(opts[:dependencies]).each { |dep| generator.dependencies << ::Gem::Dependency.new(*Array(dep)) }
       end
       if opts[:development_dependencies]
         Array(opts[:development_dependencies]).each do |dep|
-          generator.development_dependencies << (dep.is_a?(Array) ? ::Gem::Dependency.new(*dep) : ::Gem::Dependency.new(dep))
+          generator.development_dependencies << ::Gem::Dependency.new(*Array(dep))
         end
       end
       generator
@@ -122,7 +120,7 @@ module Tumbler
     end
 
     def template_path(path)
-      File.join(File.dirname(__FILE__), '..', 'template', path)
+      File.join(File.dirname(__FILE__), '..', 'templates', path)
     end
 
     # copy_template('generic.rb.erb', :to => '/path/to/file')
