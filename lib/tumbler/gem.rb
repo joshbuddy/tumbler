@@ -29,7 +29,7 @@ module Tumbler
     def install
       build
       inform "Installing #{built_gem_path}" do
-        exec("sudo gem install #{built_gem_path}")
+        exec("gem install #{built_gem_path}")
       end
     end
 
