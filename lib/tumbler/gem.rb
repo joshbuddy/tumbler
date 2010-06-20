@@ -10,8 +10,12 @@ module Tumbler
       @manager.base
     end
 
-    def built_gem_path
+    def built_gem_base
       "#{@manager.name}-#{@manager.version.to_s}.gem"
+    end
+
+    def built_gem_path
+      File.join('pkg', built_gem_base)
     end
 
     def push
@@ -21,7 +25,7 @@ module Tumbler
 
     def install
       build
-      exec("sudo gem install pkg/#{built_gem_path}")
+      exec("sudo gem install #{built_gem_path}")
     end
 
     def spec_path
@@ -30,8 +34,10 @@ module Tumbler
 
     def build
       sh("bundle exec gem build #{spec_path}")
-      sh("mkdir -p pkg")
-      sh("mv -f #{built_gem_path} pkg/")
+      Dir.chdir(base) { 
+        FileUtils.mkdir_p('pkg')
+        FileUtils.mv(built_gem_base, 'pkg')
+      }
     end
   end
 end
