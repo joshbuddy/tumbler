@@ -15,6 +15,7 @@ module Tumbler
 
     def update
       inform "Updating gem '#{@name}' at #{@dir}" do
+        upgrade_gemfile
         upgrade_deps
         upgrade_version
         upgrade_changelog
@@ -26,7 +27,7 @@ module Tumbler
     def upgrade_tumbler_config
       inform "Examining Tumbler config" do
         unless File.exist?(tumbler_config_path)
-          Tumbler::Generate.app(@dir, @name).write_tumbler_config
+          generator.write_tumbler_config
         end
       end
     end
@@ -56,7 +57,7 @@ module Tumbler
           # go to rubygems and get it
           gem_data = JSON.parse(Net::HTTP.get(URI.parse("http://rubygems.org/api/v1/gems/#{URI.escape(@name)}.json")))
           version = gem_data['version']
-          Tumbler::Generate.app(@dir, @name).write_version(version)
+          generator.write_version(version)
         end
       end
     end
@@ -79,6 +80,28 @@ module Tumbler
       end
     end
 
+    def upgrade_gemfile
+      inform "Examining Gemfile" do
+        generator.write_gemfile and return if !File.exist?(gemfile_path)
+        unless File.read(gemfile_path) =~ /tumbler/
+          File.open(gemfile_path, 'a') { |f|
+            f << <<-HERE_DOC
+# automatically added by Tumbler
+
+group :development do
+  gem 'tumbler'
+end
+            HERE_DOC
+          }
+        end
+        
+      end
+    end
+
+    def gemfile_path
+      File.join(@dir, 'Gemfile')
+    end
+
     def rakefile_path
       File.join(@dir, 'Rakefile')
     end
@@ -90,6 +113,12 @@ module Tumbler
     def create_rakefile
       File.open(rakefile_path, 'w') { |f|
         f.puts "require 'tumbler'\nnTumbler.use_rake_tasks"
+      }
+    end
+
+    def create_gemfile
+      File.open(gemfile_path, 'w') { |f|
+        
       }
     end
 
@@ -107,6 +136,10 @@ module Tumbler
 
     def gemfile_path
       File.join(@dir, 'Gemfile')
+    end
+    
+    def generator
+      @generator ||= Tumbler::Generate.app(@dir, @name)
     end
   end
 end

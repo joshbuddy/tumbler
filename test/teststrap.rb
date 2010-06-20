@@ -12,7 +12,7 @@ Tumbler::Gem.any_instance.stubs(:install).raises
 Tumbler::Gem.any_instance.stubs(:push).raises
 
 
-Riot.reporter = Riot::DotMatrixReporter
+Riot.reporter = Riot::StoryReporter
 class Riot::Situation
 
   def create_app(name='test', opts={})

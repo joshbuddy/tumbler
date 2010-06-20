@@ -7,6 +7,7 @@ context "Updater" do
   setup do
     @bin = File.expand_path(File.join(File.dirname(__FILE__), '..', 'bin', 'tumbler'))
     @target = '/tmp/test'
+    FileUtils.rm_rf @target
     FileUtils.mkdir_p(@target)
     capture(:stdout) { Tumbler::Cli.start(['rails',"-r=#{@target}"]) }
   end
@@ -74,6 +75,27 @@ context "Updater" do
       Tumbler::Updater.new("#{@target}/rails", :name => 'rails').update
     end
     asserts("adds Tumbler file") { File.exist?("#{@target}/rails/Tumbler") }
+  end
+
+  context "add a Gemfile file if it doesn't exist" do
+    setup do
+      File.unlink("#{@target}/rails/Gemfile")
+      Tumbler::Updater.new("#{@target}/rails", :name => 'rails').update
+    end
+    asserts("adds Gemfile file") { File.exist?("#{@target}/rails/Gemfile") }
+    asserts("finds tumbler once") do
+      File.read("#{@target}/rails/Gemfile").scan(/gem ['"]tumbler['"]/)
+    end.size 1
+  end
+
+  context "append to an existing Gemfile file" do
+    setup do
+      File.open("#{@target}/rails/Gemfile", 'w') {|f| f << ''}
+      Tumbler::Updater.new("#{@target}/rails", :name => 'rails').update
+    end
+    asserts("finds tumbler once") {
+      File.read("#{@target}/rails/Gemfile").scan(/gem ['"]tumbler['"]/)
+    }.size 1
   end
 
 end
