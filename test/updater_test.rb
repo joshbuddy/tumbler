@@ -12,7 +12,6 @@ context "Updater" do
   end
   teardown do
     FileUtils.rm_rf @target
-    $".delete "tumbler/gemspec.rb" # we need to delete this so each gemspec can be generated fresh
   end
 
   context "fetches the version number" do

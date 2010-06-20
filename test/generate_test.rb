@@ -2,7 +2,6 @@ require File.join(File.dirname(__FILE__),'teststrap')
 
 context "Generate" do
   setup { @test_dir = temp_dir('test') }
-  teardown { $".delete "tumbler/gemspec.rb" } # we need to delete this so each gemspec can be generated fresh
   teardown{ FileUtils.rm_rf(@test_dir) }
 
   context "suppress changelog creation if disabled" do

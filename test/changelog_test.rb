@@ -2,7 +2,6 @@ require File.join(File.dirname(__FILE__),'teststrap')
 
 context "Manager::Changelog" do
   setup { $".delete "tumbler/gemspec.rb" }
-  teardown { $".delete "tumbler/gemspec.rb" } # we need to delete this so each gemspec can be generated fresh
 
   context "generates changelog" do
     setup { @tumbler, @dir, @test_dir = create_app('test') }
