@@ -1,3 +1,13 @@
+== 0.0.15
+
+* Nicer output for generation and updating (Joshua Hull, ef03bbe)
+* Version constant can either be Version or VERSION (Joshua Hull, f5cf74e)
+* Make automatic case first. (Joshua Hull, db6454d)
+* Explain tumbler task namespacing (Joshua Hull, b39c0e2)
+* Update description/summary. (Joshua Hull, a972fd1)
+* Allow color to be enabled/disabled (Joshua Hull, 1e5f5ba)
+* Add colorful output (Joshua Hull, d626d17)
+
 == 0.0.14
 
 * Remove sudo on gem install. You have to sudo it yourself if you want that behaviour. (Joshua Hull, 1a244cc)
