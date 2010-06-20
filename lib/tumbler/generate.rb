@@ -5,6 +5,7 @@ module Tumbler
   class Generate
 
     include Runner
+    include Informer
 
     def self.app(dir, name, opts = {})
       generator = Generate.new(dir, name)
@@ -43,18 +44,21 @@ module Tumbler
     end
 
     def write
-      write_gemspec
-      write_gemfile
-      write_version(@version)
-      write_file
-      write_changelog
-      write_rakefile
-      write_tumbler_config
-      sh 'git init'
-      initial_commit
+      inform "Generating gem #{name}" do
+        write_gemspec
+        write_gemfile
+        write_version(@version)
+        write_file
+        write_changelog
+        write_rakefile
+        write_tumbler_config
+        sh 'git init'
+        initial_commit
+      end
     end
 
     def initial_commit
+      inform "Performing initial commit"
       sh 'git init'
       sh 'git add .'
       sh 'git commit -a -m"Initial commit"'
@@ -82,10 +86,12 @@ module Tumbler
     end
     
     def write_changelog
+      inform "Writing changelog file"
       File.open(File.join(@base, @changelog), 'w') {|f| f << '' } if @changelog
     end
     
     def write_rakefile
+      inform "Writing Rakefile"
       FileUtils.cp(template_path('Rakefile'), @base)
     end
 
@@ -94,18 +100,22 @@ module Tumbler
     end
     
     def write_version(version)
+      inform "Writing version file"
       copy_template('version.rb.erb', :to => version_path, :binding => binding)
     end
 
     def write_gemfile
+      inform "Writing Gemfile"
       copy_template('Gemfile.erb', :to => gemfile_file)
     end
 
     def write_gemspec
+      inform "Writing #{name}.gemspec"
       copy_template('generic.gemspec.erb', :to => gemspec_file)
     end
 
     def write_tumbler_config
+      inform "Writing Tumbler config"
       copy_template('Tumbler.erb', :to => config_file)
     end
 
