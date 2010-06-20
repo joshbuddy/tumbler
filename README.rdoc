@@ -52,6 +52,10 @@ Next, in your +Rakefile+, add the following to get access to Tumbler tasks:
   require 'tumbler'
   Tumbler.use_rake_tasks
 
+If you'd prefer to have the tumbler tasks namespaced, provide use_rake_tasks with a string. For example:
+
+  Tumbler.use_rake_tasks('tumbler')
+
 Alternatively, you can have Tumbler do all this work for you. If you install Tumbler into your system gems, you can simply execute:
 
   tumbler . -u --name gem_name
