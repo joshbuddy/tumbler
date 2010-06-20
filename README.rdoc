@@ -31,7 +31,7 @@ If you have a pre-existing gem which could benefit from Tumbler, you have to a d
 
 To automatically setup your project to use tumbler, simply execute:
 
-  tumbler . -u --name gem_name
+  tumbler gem_name -u -r=/path/to
   
 From inside the gem's root directory and this will take care of all the details for you. When it's done updating your gem, review and commit the changes.
 
