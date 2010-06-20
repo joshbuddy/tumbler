@@ -1,3 +1,31 @@
+== 0.0.12
+
+* Having a default require for the version file is probably a reasonable default. (Joshua Hull, 6afc0be)
+* Remove spec completely and update rakefile (Arthur Chiu, a99fbb4)
+* Converted version_test (Arthur Chiu, 2b6c300)
+* Convert task_test (Arthur Chiu, 73ccc19)
+* Updated teststrap and converted changelog_test (Arthur Chiu, a05e105)
+* Merged in bin_tumbler tests into cli_test (Arthur Chiu, 016ee16)
+* Generate test conversion (Arthur Chiu, 622a9cf)
+* Converted updater_test (Arthur Chiu, 0548e72)
+* Change to DotMatrix, addd gemspec test (Arthur Chiu, c50705c)
+* Initial changes to riot (Arthur Chiu, 321683b)
+* What did dev say to the cli options parser? you're such a thor. (Arthur Chiu, 0a428eb)
+* Remove gemfile.lock (Arthur Chiu, 9c94f67)
+* Added a section to readme to explain differences from Jeweler (I will flesh it out soon) (Nathan Esquenazi, 0bba249)
+* Fixes summary and description to be different to prevent warning (Nathan Esquenazi, 9ea80a0)
+* remove specification_version (set automatically when the gemspec is 'packaged') (Nathan Esquenazi, ad69939)
+* Cleanup and refactor into a copy_template method (Nathan Esquenazi, e8e9033)
+* Remove generate_xxx methods and render directly in write methods (Nathan Esquenazi, 759d0fe)
+* Cleaned up spec. (Joshua Hull, 4231be6)
+* Require version file by default (Joshua Hull, 6c599a9)
+* Removed require in gem lib file (Arthur Chiu, d26adee)
+* Added gem lib file (Arthur Chiu, a953012)
+* Add test to check mygem directory and mygem.rb (Arthur Chiu, f4ee058)
+* Use /test for spec files. (Joshua Hull, ef67ebd)
+* Don't commit CHANGELOG after first part of two part deploy. (Joshua Hull, a0e96aa)
+* Add correct summary/description to gem (Joshua Hull, 573ecf2)
+
 == 0.0.11
 
 * Use custom matcher for searching in file. (Joshua Hull, 8d16801)
