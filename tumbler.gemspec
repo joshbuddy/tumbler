@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project = Tumbler::Gemspec.name
   s.authors = ["Joshua Hull"]
   s.date = Tumbler::Gemspec.date
-  s.description = "Let's make gem development fun and remove all the repetition! Tumbler provides support for common gem management tasks which helps you spend less time dealing with gem releases and more time focusing on your gem functionality!"
+  s.description = "Let's make gem development fun! Tumbler provides common gem management tasks using a common set of 'best practices' out of the box."
   s.summary = "Common gem generation and management tasks"
   s.email = %q{joshbuddy@gmail.com}
   s.extra_rdoc_files = Tumbler::Gemspec.files('README.rdoc')

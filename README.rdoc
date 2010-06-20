@@ -1,6 +1,6 @@
 = Tumbler
 
-Let's make gem development fun and remove all the repetition! Tumbler provides support for common gem management tasks which helps you spend less time dealing with gem releases and more time focusing on your gem functionality!
+Let's make gem development fun! Tumbler provides common gem management tasks using a common set of 'best practices' out of the box.
 
 == Gem Guidelines
 
@@ -88,12 +88,13 @@ If you do the following,
   
 you will bump the version, tag it in git, regenerate the changelog from your git commits and push the whole thing to rubygems and your remote.
 
-If you prefer you can do it in two steps (which give you a chance to edit the generated changelog)
+If you prefer you can do it in two steps (which gives you a chance to edit the generated changelog)
 
   rake version:(tiny|minor|major):bump
-  rake version:push
+  
+At this point, edit your changelog to reflect whatever comments or formatting you'd like. When you're done, run the following
 
-This will give you the chance to review the changelog and do anything else you'd like before taking the final release plunge.
+  rake version:push
 
 === Common Workflow
 
