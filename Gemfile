@@ -5,6 +5,7 @@ gem 'versionomy'
 gem 'bundler'
 gem 'json'
 gem 'thor', :require => 'thor/group'
+gem 'rainbow'
 
 group :development do
   gem 'rake'

@@ -1,6 +1,7 @@
 require 'callsite'
 require 'versionomy'
 require 'bundler'
+require 'rainbow'
 
 Callsite.activate_kernel_dir_methods
 
