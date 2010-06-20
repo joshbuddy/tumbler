@@ -1,3 +1,7 @@
+== 0.0.13
+
+* Tidier pathing and building. (Joshua Hull, 21a9017)
+
 == 0.0.12
 
 * Having a default require for the version file is probably a reasonable default. (Joshua Hull, 6afc0be)
