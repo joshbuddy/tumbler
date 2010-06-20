@@ -6,6 +6,7 @@ Callsite.activate_kernel_dir_methods
 
 $LOAD_PATH << __DIR__
 
+require 'tumbler/informer'
 require 'tumbler/runner'
 require 'tumbler/updater'
 require 'tumbler/rake_tasks'

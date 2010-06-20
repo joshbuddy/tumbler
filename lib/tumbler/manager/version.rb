@@ -2,6 +2,7 @@ module Tumbler
   class Manager
     class Version
       include Runner
+      include Informer
 
       attr_reader :file, :basefile, :field_names
 
@@ -45,17 +46,21 @@ module Tumbler
       end
 
       def bump(level)
-        if @manager.noop
-          @manager.dry "Bumping version to #{bump(level).to_s}"
-        else
-          new_file = generate_with_new(@version.bump(level).to_s)
-          File.open(file, 'w') {|f| f << new_file }
-          reload
+        inform "Bumping version to #{@version.bump(level).to_s}" do
+          if @manager.noop
+            @manager.dry "Bumping version to #{@version.bump(level).to_s}"
+          else
+            new_file = generate_with_new(@version.bump(level).to_s)
+            File.open(file, 'w') {|f| f << new_file }
+            reload
+          end
         end
       end
 
       def commit(from)
-        sh "git commit #{@basefile} -m'Bumped version from #{from} to #{to_s}'"
+        inform "Committing version `#{@basefile}'" do
+          sh "git commit #{@basefile} -m'Bumped version from #{from} to #{to_s}'"
+        end
       end
 
       def base

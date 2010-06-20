@@ -1,7 +1,8 @@
 module Tumbler
   class Gem
     include Runner
-
+    include Informer
+    
     def initialize(manager)
       @manager = manager
     end
@@ -20,12 +21,16 @@ module Tumbler
 
     def push
       build
-      sh("gem push #{built_gem_path}")
+      inform "Pushing #{built_gem_path}" do
+        sh("gem push #{built_gem_path}")
+      end
     end
 
     def install
       build
-      exec("sudo gem install #{built_gem_path}")
+      inform "Installing #{built_gem_path}" do
+        exec("sudo gem install #{built_gem_path}")
+      end
     end
 
     def spec_path
@@ -33,11 +38,13 @@ module Tumbler
     end
 
     def build
-      sh("bundle exec gem build #{spec_path}")
-      Dir.chdir(base) { 
-        FileUtils.mkdir_p('pkg')
-        FileUtils.mv(built_gem_base, 'pkg')
-      }
+      inform "Building #{built_gem_path}" do
+        sh("bundle exec gem build #{spec_path}")
+        Dir.chdir(base) { 
+          FileUtils.mkdir_p('pkg')
+          FileUtils.mv(built_gem_base, 'pkg')
+        }
+      end
     end
   end
 end

@@ -4,6 +4,7 @@ require 'tumbler/manager/version'
 module Tumbler
   class Manager
     include Runner
+    include Informer
 
     Change = Struct.new(:hash, :author, :summary)
 
@@ -68,25 +69,31 @@ module Tumbler
 
     def bump_and_commit(field)
       guard_clean
-      @changelog.update if @changelog
-      bump(field)
-      @changelog.write_version_header if @changelog
+      inform "Bumping & committing" do
+        @changelog.update if @changelog
+        bump(field)
+        @changelog.write_version_header if @changelog
+      end
     end
 
     def tag_and_push
-      @changelog.commit if @changelog && !clean?
-      guard_clean
-      guard_already_tagged
-      tag
-      push
-      @gem.push
+      inform "Tagging & pushing" do
+        @changelog.commit if @changelog && !clean?
+        guard_clean
+        guard_already_tagged
+        tag
+        push
+        @gem.push
+      end
     end
 
     def bump_and_push(field)
-      revert_on_error {
-        bump_and_commit(field)
-        tag_and_push
-      }
+      inform "Bumping & pushing" do
+        revert_on_error do
+          bump_and_commit(field)
+          tag_and_push
+        end
+      end
     end
 
     def current_revision
@@ -98,6 +105,7 @@ module Tumbler
       begin
         yield
       rescue
+        inform "Undoing commit"
         sh "git reset --hard #{current_ref}"
         raise
       end
@@ -113,8 +121,10 @@ module Tumbler
 
     def bump(level)
       from = @version.to_s
-      @version.bump(level)
-      @version.commit(from)
+      inform "Bumping from #{from} by #{level}" do
+        @version.bump(level)
+        @version.commit(from)
+      end
     end
 
     def clean?
@@ -122,16 +132,16 @@ module Tumbler
     end
 
     def push
-      sh "git push --all"
-      sh "git push --tags"
+      inform "Pushing commit & tags" do
+        sh "git push --all"
+        sh "git push --tags"
+      end
     end
 
     def tag
-      sh "git tag #{@version.to_s}"
-    end
-
-    def commit(msg)
-      sh "git commit #{@version.basefile} -m'#{msg}'"
+      inform "Tagging version #{@version.to_s}" do
+        sh "git tag #{@version.to_s}"
+      end
     end
 
     def tags

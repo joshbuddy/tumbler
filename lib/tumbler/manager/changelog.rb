@@ -5,6 +5,7 @@ module Tumbler
   class Manager
     class Changelog
       include Runner
+      include Informer
 
       DEFAULT_FILE = 'CHANGELOG'
 
@@ -21,12 +22,14 @@ module Tumbler
       end
 
       def write_version_header
-        prepend "== #{@manager.version}\n\n"
+        inform "Writing version header to `#{@basefile}'" do
+          prepend "== #{@manager.version}\n\n"
+        end
       end
 
       def prepend(data)
         if @manager.noop
-          @manager.dry "Prepending #{data} to #{@basefile}"
+          @manager.dry "Prepending #{data} to `#{@basefile}'"
         else
           Tempfile.open('changelog') do |tmp|
             tmp.puts data
@@ -44,8 +47,10 @@ module Tumbler
 
       def update
         ensure_existence
-        prepend("\n")
-        prepend(@manager.latest_changes.inject('') { |changes, change| changes << "* #{change.summary} (#{change.author}, #{change.hash})\n" })
+        inform "Updating `#{@basefile}' with latest changes" do
+          prepend("\n")
+          prepend(@manager.latest_changes.inject('') { |changes, change| changes << "* #{change.summary} (#{change.author}, #{change.hash})\n" })
+        end
       end
 
       def ensure_existence
