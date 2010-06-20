@@ -1,3 +1,9 @@
+== 0.0.16
+
+* No longer need to manipulate $" (Joshua Hull, 4f9eee3)
+* Favour creating an explicit helper vs using a constant (Joshua Hull, 3b42cae)
+* Remove space before parentheses. (Joshua Hull, 1a08408)
+
 == 0.0.15
 
 * Nicer output for generation and updating (Joshua Hull, ef03bbe)
