@@ -50,7 +50,7 @@ Alternatively, for existing projects, you can set up all the bits needed to make
 
 Your version number can be anything parsable by Versionomy. The changelog will be automatically updated when a new version is released.
 
-The version file should have a constant <tt>VERSION</tt> which is set to the current version for your gem. A typical version file might look like the following:
+The version file should have a constant <tt>VERSION</tt> or <tt>Version</tt> which is set to the current version for your gem. A typical version file might look like the following:
 
   # lib/awesome_gem/version.rb
   module AwesomeGem #:nodoc
