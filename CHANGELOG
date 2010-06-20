@@ -1,3 +1,8 @@
+== 0.0.14
+
+* Remove sudo on gem install. You have to sudo it yourself if you want that behaviour. (Joshua Hull, 1a244cc)
+* More informative output (Joshua Hull, cb09263)
+
 == 0.0.13
 
 * Tidier pathing and building. (Joshua Hull, 21a9017)
