@@ -51,6 +51,10 @@ module Tumbler
       @version
     end
 
+    def use_color(state = true)
+      Sickill::Rainbow.enabled = state
+    end
+
     def use_gem(&block)
       @gem.instance_eval(block)
     end

@@ -11,7 +11,7 @@ module Tumbler
       begin
         block.call if block
       rescue Exception
-        $stderr.puts " #{msg} failed!".color(:red)
+        $stderr.puts "#{msg} failed!".color(:red)
         raise
       ensure
         $informer_indent -= 1
