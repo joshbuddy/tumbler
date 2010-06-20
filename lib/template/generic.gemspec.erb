@@ -1,25 +1,25 @@
 # -*- encoding: utf-8 -*-
 
-require 'tumbler/gemspec'
+require 'tumbler'
+tumbler = Tumbler::GemspecHelper.new
 
 Gem::Specification.new do |s|
-  s.name = <%= @name.inspect %>
-  s.version = Tumbler::Gemspec.version
-
+  s.name = tumbler.name
+  s.version = tumbler.version
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.rubyforge_project = <%= @name.inspect %>
+  s.rubyforge_project = tumbler.name
   s.authors = <%=[git_name].inspect%>
-  s.date = Tumbler::Gemspec.date
+  s.date = tumbler.date
   s.description = %q{Description}
   s.email = <%=git_email.inspect%>
-  s.files = Tumbler::Gemspec.files
+  s.files = tumbler.files
   # s.homepage = %q{http://github.com/<%= github_user %>/<%= @name %>}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{This is awesome.}
-  s.test_files = Tumbler::Gemspec.files(/^test/)
+  s.test_files = tumbler.files(/^test/)
 
   # dependencies
-  Tumbler::Gemspec.inject_dependencies(s)
+  tumbler.inject_dependencies(s)
 end

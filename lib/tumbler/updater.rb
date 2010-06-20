@@ -42,7 +42,7 @@ module Tumbler
   raise # (see below)
 
   # You probably want to use inject the dependencies using either
-  # add_bundler_depenedencies or Tumbler::Gemspec.inject_dependencies(spec) (where spec is your Gemspec)
+  # add_bundler_depenedencies or tumbler.inject_dependencies(spec) (where spec is your Gemspec)
               HERE_DOC
             end
           end

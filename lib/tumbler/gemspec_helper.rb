@@ -1,6 +1,10 @@
 module Tumbler
   class GemspecHelper
-    def initialize(manager)
+    def initialize(manager = nil)
+      unless manager
+        root = File.expand_path(File.dirname(Callsite.parse(caller).find{|c| c.filename =~ /\.gemspec$/}.filename))
+        manager = Tumbler.load(root)
+      end
       @manager = manager
     end
 

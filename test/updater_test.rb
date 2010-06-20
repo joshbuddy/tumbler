@@ -65,7 +65,7 @@ context "Updater" do
       Tumbler::Updater.new("#{@target}/rails", :name => 'rails').update
     end
     asserts("finds inject_dependencies once") do
-      File.read("#{@target}/rails/rails.gemspec").scan(/Tumbler::Gemspec.inject_dependencies/)
+      File.read("#{@target}/rails/rails.gemspec").scan(/tumbler.inject_dependencies/)
     end.size 1
   end
 
