@@ -1,4 +1,6 @@
-require '<%= name %>/version'
+<% unless options[:version].strip == 'none' %>
+ require '<%= name %>/version'
+<% end %>
 
 module <%=constant_name %> #:nodoc
 end

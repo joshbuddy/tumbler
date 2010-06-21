@@ -18,13 +18,13 @@ module Tumbler
     class_option :update,    :desc => 'Update existing application',  :aliases => '-u', :default => false, :type => :boolean
     class_option :version,   :desc => 'Set the version number',       :aliases => '-v', :default => '0.0.0',   :type => :string
     class_option :root,      :desc => 'set root path',                :aliases => '-r', :default => '.',   :type => :string
-    class_option :dependencies, :desc => 'set gem dependencies',      :aliases => '-d', :default => nil,  :tyype => String
+    class_option :dependencies, :desc => 'set gem dependencies',      :aliases => '-d', :default => nil,  :type => :string
     def setup_gem
       path = File.join options[:root], name
       case
       when options[:update] then Tumbler::Updater.new(path, options).update
       when File.exist?(path) then raise("Directory path #{path} already exists!")
-      else FileUtils.mkdir_p(path) ; generate_project#Tumbler::Generate.app(path, name, options).write
+      else FileUtils.mkdir_p(path) ; generate_project
       end
       say "Gem #{name} successfully generated!", :green
     end
