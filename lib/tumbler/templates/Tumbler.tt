@@ -1,6 +1,6 @@
 gem_name <%= name %>
 
-<% if options[:version] %>
+<% unless options[:version].strip == 'none' %>
 version_file 'lib/<%= name %>/version.rb'
 <% end %>
 <% if options[:changelog] %>
