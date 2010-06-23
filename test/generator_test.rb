@@ -118,5 +118,4 @@ context "Generator" do
       asserts("gem 'eventmachine") { File.read topic }.matches %r{gem "eventmachine", ">=1.0.0"}
     end
   end
-
 end
