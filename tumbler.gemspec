@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
-  s.test_files = files.select{|f| f =~ /^spec/}
+  s.test_files = files.select{|f| f =~ /^test/}
   s.executables = files.select{|f| f =~ /^bin/}
 
   s.add_runtime_dependency 'callsite',   '>=0.0.2'

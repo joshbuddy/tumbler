@@ -4,7 +4,7 @@ require 'tumbler'
 tumbler = Tumbler::GemspecHelper.new
 
 Gem::Specification.new do |s|
-  s.name = 'tumbler'
+  s.name = <%= name.inspect %>
   s.version = Tumbler::VERSION
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.rubyforge_project = 'tumbler'
