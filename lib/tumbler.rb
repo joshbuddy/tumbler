@@ -7,6 +7,8 @@ Callsite.activate_kernel_dir_methods
 
 $LOAD_PATH << __DIR__
 
+require 'ext/bundler'
+
 require 'tumbler/informer'
 require 'tumbler/runner'
 require 'tumbler/updater'
@@ -24,8 +26,19 @@ module Tumbler
     Tumbler::RakeTasks.register(File.expand_path(root), name)
   end
 
-  def self.load(base)
-    File.exist?(File.join(base, 'Tumbler')) ? Manager.new(base) : nil
+  def self.load(base, name = nil)
+    gemspecs = Dir[File.join(base, '*.gemspec')]
+    case gemspecs.size
+    when 0
+      raise "#{base} contains no gemspecs"
+    when 1
+      Manager.new(gemspecs.first)
+    else
+      if name
+        Manager.new(File.join(base, "#{name}.gemspec"))
+      else
+        raise "There are multiple gemspecs in #{base}. Specify the exact one."
+      end
+    end
   end
-
 end

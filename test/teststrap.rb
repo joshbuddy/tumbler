@@ -25,7 +25,7 @@ class Riot::Situation
       `git remote add origin #{remote}`
       `git push origin master`
     }
-    [Tumbler::Manager.new(@dir), @dir, @remote_dir]
+    [Tumbler::Manager.new("#{@dir}/#{name}.gemspec"), @dir, @remote_dir]
   end
 
   def create_bare_app(name, opts = {})

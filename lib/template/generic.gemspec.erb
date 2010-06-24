@@ -4,10 +4,10 @@ require 'tumbler'
 tumbler = Tumbler::GemspecHelper.new
 
 Gem::Specification.new do |s|
-  s.name = tumbler.name
-  s.version = tumbler.version
+  s.name = 'tumbler'
+  s.version = Tumbler::VERSION
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.rubyforge_project = tumbler.name
+  s.rubyforge_project = 'tumbler'
   s.authors = <%=[git_name].inspect%>
   s.date = tumbler.date
   s.description = %q{Description}
@@ -19,7 +19,4 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{This is awesome.}
   s.test_files = tumbler.files(/^test/)
-
-  # dependencies
-  tumbler.inject_dependencies(s)
 end

@@ -8,7 +8,7 @@ module Tumbler
 
     Change = Struct.new(:hash, :author, :summary)
 
-    attr_reader :base, :version, :changelog, :gem, :name
+    attr_reader :base, :version, :changelog, :gem, :gemspec_path
     attr_accessor :noop
 
     def default_version_file
@@ -19,12 +19,8 @@ module Tumbler
       Changelog::DEFAULT_FILE
     end
 
-    def gem_name(name)
-      @name = name
-    end
-
-    def bundler
-      @definition ||= Bundler::Dsl.evaluate(gemfile_path)
+    def name
+      gem_specification.name
     end
 
     def config_path
@@ -33,10 +29,6 @@ module Tumbler
 
     def gemfile_path
       File.join(@base, 'Gemfile')
-    end
-
-    def gemspec_path
-      File.join(@base, "#{@name}.gemspec")
     end
 
     def lockfile_path
@@ -154,6 +146,7 @@ module Tumbler
 
     def reload
       reset
+      gem_specification(true)
       @gem = Gem.new(self)
       instance_eval(File.read(config_path), config_path, 1)
     end
@@ -164,11 +157,17 @@ module Tumbler
         map{|line| Change.new(line[0], line[1], line[2])}
     end
 
+    def gem_specification(force = false)
+      @gem_specification = nil if force
+      @gem_specification ||= ::Gem::Specification.load(gemspec_path)
+    end
+
     private
-      def initialize(base)
-        @base = base
-        reload
-        @noop = true if ENV['DRY'] == '1'
-      end
+    def initialize(gemspec_path)
+      @gemspec_path = gemspec_path
+      @base = File.dirname(gemspec_path)
+      reload
+      @noop = true if ENV['DRY'] == '1'
+    end
   end
 end

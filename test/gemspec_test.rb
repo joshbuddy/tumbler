@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__),'teststrap')
 
 context "GemspecHelper" do
   setup { @dir, @app = create_bare_app('test') }
-  setup { @helper = Tumbler::GemspecHelper.new(@app) }
+  setup { @helper = Tumbler::GemspecHelper.new }
   teardown { FileUtils.rm_rf(@dir) }
 
   asserts(:name).equals 'test'
