@@ -92,7 +92,7 @@ module Tumbler
     
     def write_rakefile
       inform "Writing Rakefile"
-      FileUtils.cp(template_path('Rakefile'), @base)
+      FileUtils.cp(template_path('project', 'Rakefile'), @base)
     end
 
     def write_file
@@ -131,8 +131,8 @@ module Tumbler
       sh('git config github.user').strip rescue 'github.user'
     end
 
-    def template_path(path)
-      File.join(File.dirname(__FILE__), '..', 'template', path)
+    def template_path(*path)
+      File.join(File.dirname(__FILE__), '..', 'template', *path)
     end
 
     # copy_template('generic.rb.erb', :to => '/path/to/file')

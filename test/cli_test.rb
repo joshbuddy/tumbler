@@ -22,9 +22,9 @@ context "Cli" do
       end
       asserts("$?") { $? }.equals 0
       asserts("version") { topic.version.to_s }.equals '0.0.0'
-      asserts("tumbler") { topic.bundler.dependencies.first.name }.equals 'tumbler'
-      asserts(">=0") { topic.bundler.dependencies.first.requirements_list }.equals ['>= 0']
-      asserts("development") { topic.bundler.dependencies.first.groups }.equals [:development]
+      asserts("tumbler") { topic.gem_specification.dependencies.first.name }.equals 'tumbler'
+      asserts(">=#{Tumbler::VERSION}") { topic.gem_specification.dependencies.first.requirements_list }.equals [">= #{Tumbler::VERSION}"]
+      asserts("development") { topic.gem_specification.development_dependencies.first.name }.equals 'tumbler'
     end
 
     context "at designated root" do

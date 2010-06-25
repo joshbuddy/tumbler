@@ -3,6 +3,6 @@ use_color true
 <% if @version %>
 version_file 'lib/<%= @name %>/version.rb'
 <% end %>
-<% if options[:changelog] %>
-changelog_file <%= options[:changelog].inspect %>
+<% if @changelog %>
+changelog_file <%= @changelog.inspect %>
 <% end %>
