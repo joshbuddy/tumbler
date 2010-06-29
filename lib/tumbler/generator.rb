@@ -33,7 +33,8 @@ module Tumbler
     end
 
     def generate_changelog
-      create_file generate_path(options[:changelog])
+      @changelog = options[:changelog] || Manager::Changelog::DEFAULT_FILE
+      create_file generate_path(@changelog)
     end
 
     def generate_dependencies
