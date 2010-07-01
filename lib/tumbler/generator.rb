@@ -19,6 +19,15 @@ module Tumbler
       generate_gemfile
       generate_gemspec
       generate_tumbler
+      initial_commit
+    end
+
+    def initial_commit
+      say "Performing initial commit...", :yellow
+      git = ::Git.init(generate_path)
+      git.add('.')
+      git.commit('initial commit')
+      git.add_tag(@version) unless options[:version].strip == 'none'
     end
 
     def constant_name

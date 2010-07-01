@@ -1,7 +1,7 @@
 require File.join(File.dirname(__FILE__),'teststrap')
 
 context "Generator" do
-  setup { @test_dir = temp_dir('test') }
+  setup { @test_dir = '/tmp/test' }
   setup { FileUtils.rm_rf @test_dir }
   teardown { $".delete "tumbler/gemspec.rb" } # we need to delete this so each gemspec can be generated fresh
 
@@ -9,7 +9,7 @@ context "Generator" do
     setup { capture(:stdout) { Tumbler::Cli.start(['my_gem',"-r=#{@test_dir}"]) } }
     asserts("dir exists") { File.exist? File.join(@test_dir, 'my_gem', 'lib', 'my_gem') }
     asserts("CHANGELOG") { File.exist? File.join(@test_dir, 'my_gem', 'CHANGELOG') }
-
+    asserts_topic.matches %r{Performing initial commit}
     context "my_gem.rb" do
       setup { File.join(@test_dir, 'my_gem', 'lib', 'my_gem.rb') }
       asserts("my_gem.rb") { File.exist?  topic }
@@ -48,6 +48,12 @@ context "Generator" do
       #asserts("gem_name") { File.read topic }.matches %r{gem_name my_gem}
       asserts("version_file") { File.read topic }.matches %r{version_file 'lib/my_gem/version.rb'}
       asserts("changelog") { File.read topic }.matches %r{changelog_file "CHANGELOG"}
+    end
+
+    context "initial commit" do
+      setup { ::Git.open File.join(@test_dir, 'my_gem') }
+      asserts("tags") { topic.tags.first.name }.equals "0.0.0"
+      asserts("commits") { topic.log(1).first.message }.equals "initial commit"
     end
 
   end
