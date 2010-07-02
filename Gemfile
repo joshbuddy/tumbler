@@ -1,4 +1,4 @@
 source :rubygems
-require 'lib/ext/bundler'
+require File.join(File.dirname(__FILE__), 'lib', 'ext', 'bundler')
 
 gemspec
