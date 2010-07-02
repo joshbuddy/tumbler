@@ -1,4 +1,4 @@
 source :rubygems
-require 'lib/tumbler'
+require 'lib/ext/bundler'
 
 gemspec

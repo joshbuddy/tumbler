@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-require 'lib/tumbler'
+require 'lib/tumbler/version'
 
 files = `git ls-files`.split("\n")
 
@@ -30,6 +30,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'json'
   s.add_runtime_dependency 'thor'
   s.add_runtime_dependency 'rainbow'
+  s.add_runtime_dependency 'git'
 
   s.add_development_dependency 'rake'
   s.add_development_dependency 'riot'
