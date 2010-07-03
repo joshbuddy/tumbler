@@ -7,7 +7,7 @@ require 'git'
 
 $LOAD_PATH << File.basename(__FILE__)
 $LOAD_PATH << File.join(File.basename(__FILE__), '..', 'lib')
-require 'tumbler'
+require File.expand_path('../lib/tumbler', File.dirname(__FILE__))
 
 Tumbler::Gem.any_instance.stubs(:install).raises
 Tumbler::Gem.any_instance.stubs(:push).raises
