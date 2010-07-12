@@ -198,6 +198,29 @@ context "Generator" do
       end
     end
 
+    context "bacon" do
+      setup do
+        capture(:stdout) { Tumbler::Cli.start(['my_gem','--test=bacon',"-r=#{@test_dir}"]) }
+        @helper = File.join(@test_dir, 'my_gem', 'test', 'helper.rb')
+        @gem_test =  File.join(@test_dir, 'my_gem', 'test','my_gem_test.rb')
+      end
+      asserts("helper.rb") { File.exist? @helper }
+      asserts("my_gem_test.rb") { File.exist? @gem_test }
+            
+      context "helper" do
+        setup { File.read(@helper) }
+        asserts_topic.matches %r{require 'bacon'}
+        asserts_topic.matches %r{lib/my_gem.rb}
+        asserts_topic.matches %r{class Bacon::Context}
+      end
+
+      context "my_gem_test.rb" do
+        setup { File.read(@gem_test) }
+        asserts_topic.matches %r{describe "MyGem"}
+        asserts_topic.matches %r{fails}
+      end
+    end
+
   end
 
 end
