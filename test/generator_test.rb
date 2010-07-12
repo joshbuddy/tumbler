@@ -27,7 +27,6 @@ context "Generator" do
     context "my_gem.gemspec" do
       setup { File.join(@test_dir, 'my_gem', 'my_gem.gemspec') }
       asserts("name") { File.read topic }.matches %r{s.name = "my_gem"}
-      asserts("test") { File.read topic }.matches %r{tumbler.files\(\/\^test\/\)}
       asserts("files") { File.read topic }.matches %r{require_paths = \["lib"\]}
     end
 
