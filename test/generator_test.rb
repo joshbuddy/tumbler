@@ -124,4 +124,32 @@ context "Generator" do
       asserts("gem 'eventmachine") { File.read topic }.matches %r{gem "eventmachine", ">=1.0.0"}
     end
   end
+
+  context "generate test framework" do
+
+    context "riot" do
+      setup do
+        capture(:stdout) { Tumbler::Cli.start(['my_gem','--test=riot',"-r=#{@test_dir}"]) }
+        @teststrap = File.join(@test_dir, 'my_gem', 'test', 'teststrap.rb')
+        @gem_test =  File.join(@test_dir, 'my_gem', 'test','my_gem_test.rb')
+      end
+      asserts("teststrap.rb") { File.exist? @teststrap }
+      asserts("my_gem_test.rb") { File.exist? @gem_test }
+            
+      context "teststrap" do
+        setup { File.read(@teststrap) }
+        asserts_topic.matches %r{require 'riot'}
+        asserts_topic.matches %r{lib/my_gem.rb}
+      end
+
+      context "my_gem_test.rb" do
+        setup { File.read(@gem_test) }
+        asserts_topic.matches %r{context "my_gem gem"}
+        asserts_topic.matches %r{false}
+      end
+      
+    end
+
+  end
+
 end
