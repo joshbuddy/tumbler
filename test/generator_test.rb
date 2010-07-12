@@ -135,15 +135,17 @@ context "Generator" do
       asserts("helper.rb") { File.exist? @helper }
       asserts("my_gem_test.rb") { File.exist? @gem_test }
             
-      context "teststrap" do
+      context "helper" do
         setup { File.read(@helper) }
         asserts_topic.matches %r{require 'riot'}
+        asserts_topic.matches %r{class Riot::Situation}
+        asserts_topic.matches %r{class Riot::Context}
         asserts_topic.matches %r{lib/my_gem.rb}
       end
 
       context "my_gem_test.rb" do
         setup { File.read(@gem_test) }
-        asserts_topic.matches %r{context "my_gem"}
+        asserts_topic.matches %r{context "MyGem"}
         asserts_topic.matches %r{false}
       end      
     end
@@ -157,10 +159,11 @@ context "Generator" do
       asserts("helper.rb") { File.exist? @helper }
       asserts("my_gem_test.rb") { File.exist? @gem_test }
             
-      context "teststrap" do
+      context "helper" do
         setup { File.read(@helper) }
         asserts_topic.matches %r{require 'test/unit'}
         asserts_topic.matches %r{require 'shoulda'}
+        asserts_topic.matches %r{class Test::Unit::TestCase}
         asserts_topic.matches %r{lib/my_gem.rb}
       end
 
@@ -180,7 +183,7 @@ context "Generator" do
       asserts("helper.rb") { File.exist? @helper }
       asserts("my_gem_test.rb") { File.exist? @gem_test }
             
-      context "teststrap" do
+      context "helper" do
         setup { File.read(@helper) }
         asserts_topic.matches %r{require 'spec'}
         asserts_topic.matches %r{require 'spec/autorun'}

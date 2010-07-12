@@ -12,7 +12,7 @@ TEST
 FLUNK=<<-FAIL
 require File.expand_path('helper.rb',File.dirname(__FILE__))
 
-context "#{name}" do
+context "#{constant_name}" do
   asserts("i flunked") { false }
 end
 FAIL
